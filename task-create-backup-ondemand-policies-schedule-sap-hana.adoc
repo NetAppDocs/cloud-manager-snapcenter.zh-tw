@@ -1,0 +1,97 @@
+---
+sidebar: sidebar 
+permalink: task-create-backup-ondemand-policies-schedule-sap-hana.html 
+keywords: create, policies, backup policies, snapcenter service, SAP HANA, backup type, backup frequency, retention count, system-defined policies, on-demand backups, schedule backups 
+summary: 使用系統定義或自訂原則、建立SAP HANA系統的隨需備份或排程備份。 
+---
+= 備份SAP HANA系統
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+您可以使用系統定義或自訂原則、執行隨需備份或排程SAP HANA系統備份。支援Snapshot型和檔案型備份。SnapCenter
+
+
+
+== 建立備份原則
+
+原則指定備份類型、備份頻率、排程、保留類型、保留計數、 以及資料保護作業的其他特性。您可以使用Cloud Manager UI來建立原則。
+
+根據預設、有兩個系統定義的原則可供使用、每個原則分別用於快照型和檔案型備份作業。
+
+*步驟*
+
+. 在「支援服務」頁面上、按一下SnapCenter 「*原則*」>「*新增*」。
+. 在「Create Backup Policy（建立備份原則）」頁面上、執行下列動作：
++
+.. 指定原則名稱。
+.. 選取您要使用此原則建立的備份類型。
+.. 指定備份名稱。
++
+預設會新增後置時間戳記。您可以選取備份名稱中應包含的其他尾碼、並定義尾碼的顯示順序。
+
+.. 指定排程備份的排程頻率、以及排程備份的開始和結束時間。
+.. 指定要保留的快照複本數目、或指定保留快照複本的天數。
+
+
+. 按一下「 * 新增 * 」。
+
+
+按一下即可檢視、編輯或刪除原則 image:screenshot-anf-view-system.png["可檢視詳細資料的圖示快照"] 與原則對應。
+
+
+
+== 建立隨需備份
+
+建立原則關聯或不關聯任何原則、即可建立SAP HANA系統的隨需備份。
+
+*步驟*
+
+. 在「支援服務」頁面上、按一下SnapCenter 「* SAP HANA Systems*」。
++
+畫面會顯示所有新增至SnapCenter 該服務的系統。
+
+. 按一下 image:screenshot-anf-view-system.png["可檢視詳細資料的圖示快照"] 與您要保護的系統相對應。
+. 按一下*隨需備份*。
+. 在「隨需備份」頁面上、執行下列其中一項動作：
++
+** 如果要將備份與原則關聯、請選取原則、然後按一下「*建立備份*」。
+** 如果您不想將備份與原則建立關聯、請執行下列動作：
++
+... 在Policy（策略）字段中，選擇* None"（無）*。
+... 選取備份類型。
++
+如果您要備份非資料磁碟區、則只能選取* Snapshot Based *作為備份類型。
+
+... 指定保留期間。
+... 按一下「*建立備份*」。
+
+
+
+
+
+
+
+
+== 建立排程備份
+
+將原則與SAP HANA系統建立關聯、以建立排程備份。
+
+*步驟*
+
+. 在「支援服務」頁面上、按一下SnapCenter 「* SAP HANA Systems*」。
++
+畫面會顯示所有新增至SnapCenter 該服務的系統。
+
+. 按一下 image:screenshot-anf-view-system.png["可檢視詳細資料的圖示快照"] 與您要保護的系統相對應。
+. 按一下*保護*。
+. 選取您要用來保護SAP HANA系統的原則。
+. 按一下*保護*。
+
+
+*瞭解更多資訊*https://docs.netapp.com/us-en/netapp-solutions-sap/backup/saphana-backup-anf-overview.html["SAP HANA利用Azure NetApp Files NetApp服務在支援功能的基礎上進行備份與還原SnapCenter"^]

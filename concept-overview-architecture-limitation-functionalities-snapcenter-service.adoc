@@ -1,0 +1,91 @@
+---
+sidebar: sidebar 
+permalink: concept-overview-architecture-limitation-functionalities-snapcenter-service.html 
+keywords: snapcenter service, data protection, SAP HANA, Azure NetApp Files, cloud manager, azure kubernetes service, limitation, functionalities 
+summary: 支援NetApp®雲端儲存設備上執行的應用程式、可利用此服務提供資料保護功能。SnapCenter 
+---
+= 深入瞭SnapCenter 解支援服務
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+支援NetApp®雲端儲存設備上執行的應用程式、可利用此服務提供資料保護功能。SnapCenterNetApp Cloud Manager內啟用的支援功能可為駐留在原地的SAP HANA®系統、提供高效率、應用程式一致、原則型的備份與還原功能。SnapCenter Azure NetApp Files
+
+
+
+== 架構
+
+支援下列元件的架構SnapCenter ：
+
+* 支援服務UI與Cloud Manager使用者介面整合。SnapCenter
++
+透過NetApp管理的Cloud Manager SaaS架構提供支援、提供多種儲存與資料管理功能。SnapCenter
+
+* Cloud Manager Connector是Cloud Manager的一個元件、可管理SnapCenter 整個過程中的各種功能、包括支援各種服務。
+* 支援支援支援Azure Kubernetes Service（以下稱為「支援服務」）的一組資料保護服務、可協調資料保護工作流程。SnapCenter
+
+
+
+NOTE: Cloud Manager Connector與SnapCenter 《支援服務：雲端管理程式」已部署在您的雲端網路中。
+
+下圖顯示SnapCenter 了各個元件之間的關係：
+
+image:anf-architecture.png["《支援服務架構：SnapCenter"]
+
+若為任何使用者提出的要求、SnapCenter 則「支援服務」UI會與Cloud Manager SaaS進行通訊、驗證要求後、該SaaS會將通話轉接至Cloud Manager Connector。連接器接著會與SnapCenter IsoreService通訊、SnapCenter 而IsoreService會叫用Azure NetApp Files Isormanagement API和HANA系統命令來執行資料保護作業。
+
+可在HANA系統的相同vnet或不同的vnet中部署支援。SnapCenter如果SnapCenter 使用不同網路的是「支援服務」和HANA系統、您應該在兩者之間建立網路連線。
+
+
+
+== 支援的功能
+
+支援下列功能。SnapCenter
+
+* 新增SAP HANA系統
+* 備份SAP HANA系統
++
+** 同時支援快照型和檔案型備份
+** 支援SAP HANA系統的隨需備份
+** 使用系統定義的原則或自訂原則、支援SAP HANA系統的排程備份
++
+您可以在原則中指定不同的排程頻率、例如每小時、每日、每週和每月。
+
+** 支援非資料磁碟區和全域非資料磁碟區的備份
+
+
+* 根據原則保留備份
+* 從使用者指定的備份還原SAP HANA系統
+* 監控備份和其他工作
+* 在HANA系統上管理資料和記錄備份目錄
+* 在儀表板上顯示保護摘要、組態詳細資料和工作狀態
+* 透過電子郵件傳送警示
+
+
+
+
+== 限制
+
+支援下列限制：SnapCenter
+
+* 不支援國際化、您應該使用英文瀏覽器。
+* 只有具備「Account Admin」角色的Cloud Manager使用者才能啟用SnapCenter 此功能。
+* Azure Kubernetes Service（KS）叢集節點故障的相關限制
++
+** 如果其中一個節點離線、則在使用者叢集中、執行中工作可能會失敗、但後續工作將會執行。
+** 在高效能叢集中、如果其中一個節點停機、您就無法新增SAP HANA系統、但其他作業也能順利執行。
++
+您應該叫出節點來新增HANA系統。
+
+** 排程器不支援高可用度組態。
++
+如果排程器使用的MySQL節點當機、您應該叫出節點、讓排程的作業繼續進行。
+
+
+
+

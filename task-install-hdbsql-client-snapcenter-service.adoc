@@ -1,0 +1,61 @@
+---
+sidebar: sidebar 
+permalink: task-install-hdbsql-client-snapcenter-service.html 
+keywords: HDBSQL client, snapcenter service, SAP HANA, protect, SAPCAR utility, scp, jump host 
+summary: 安裝HDBSQL用戶端、在SAP HANA資料庫上執行資料保護作業。 
+---
+= 安裝HDBSQL用戶端
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+啟用SnapCenter 完「支援服務」之後、請安裝HDBSQL用戶端、以便在SAP HANA資料庫上執行資料保護作業。HDBSQL用戶端用於與SAP HANA系統通訊。
+
+*步驟*
+
+. 從SAP帳戶下載HDB用戶端軟體。
++
+這是副檔名為（.SAR）的歸檔檔案。範例：IMDB_CLIENT20_008_20-80002082.SAR
+
++
+
+NOTE: HDB用戶端軟體版本應為2.4.202.1590784230或更新版本。
+
+. 從SAP帳戶下載最新的SAPCAR公用程式。範例：_SAPCAR_1010-70006178.Ex_
+. 在Cloud Manager UI上、按一下* Connector*以取得連接器名稱。
+. 登入 https://azure.microsoft.com/en-in/features/azure-portal/["Microsoft Azure入口網站"^]。
+. 按一下*虛擬機器*。
+. 搜尋Cloud Manager Connector、然後複製指派給Connector的公有IP位址。
++
+如果連接器未啟用公用IP、您應該使用跨接主機。
+
+. 將SAPCAR公用程式和HDB用戶端歸檔（.SAR）檔案複製到Connector機器。
++
+若要將檔案複製到Connector路徑、您需要認證資料或建立Connector時提供的金鑰。
+
++
+** 「CP <SAPCAR_service><usersername>@<ip_address>:/home/<username>'
+** 「CP <HDB_Client_archive ><username>@<ip_address>:/home/<username>'
++
+檔案會複製到_/home/<使用者名稱>_。
+
+
+
+. 使用ssh認證或金鑰登入Connector VM。
+. 在Connector VM中執行下列命令、以在下列系統中安裝HDBSQL用戶端。
++
+.. 「Udo CP /home/<使用者名稱>/<SAPCAR_UTIT>/var/lib/dred/voles/cloudmanager_snapcenter_volVolume /資料/」
+.. 「Udo CP /home/<使用者名稱>/< HDB_Client_archive>/var/lib/ded泊 塢/磁碟區/cloudmanager_snapcenter_volume /_data/」
+.. 「Udo Docker執行- IT cloudmanager_snapcenter /bin/bash /opt/netapp/hdbclient/hdbclient.sh - archivefile <HDB_Client_archive>- archiveutil<SAPCar_utile>」
+
+
+
+
+*瞭解更多資訊*
+
+https://docs.microsoft.com/en-us/azure/virtual-machines/linux/copy-files-to-linux-vm-using-scp["如何使用scp移動檔案"^]

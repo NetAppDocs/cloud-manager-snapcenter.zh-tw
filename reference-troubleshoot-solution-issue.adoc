@@ -1,0 +1,74 @@
+---
+sidebar: sidebar 
+permalink: reference-troubleshoot-solution-issue.html 
+keywords: troubleshoot, solution, issues, snapcenter service, SAP HANA, Redis Pods, crashloopbackoff state, backup fails, tenant database 
+summary: 疑難排解SnapCenter 功能支援服務問題。 
+---
+= 疑難排解問題
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+
+
+== 問題：Redis Pod陷入CrashLooper BackOff狀態
+
+*說明*在高可用度組態中、如果叢集的所有節點都當機、則會使高可用度叢集恢復正常運作狀態。當您重新啟動所有節點時、可能會發現所有的Redis Pod都處於CrashLooper BackOff狀態。
+
+*解決方案*您應該執行下列命令來還原系統。
+
+. 登入Connector。
+. 刪除所有Redis Pod。
++
+** 「Docker執行-it cloudmanager_snapcenter --sh」
+** 「kubectl scale -複本= 0 STS-dasions- redis節點- n SnapCenter 」
+
+
+. 確認是否已刪除所有Redis Pod。「kubecll Get pod -n SnapCenter 架次」
+. 如果Redis Pod未刪除、請執行下列命令：
++
+** 「kubecll刪除pod sc-das依賴 關係-redis節點-0 -n SnapCenter sce'
+** 「kubecll刪除pod sc-dresase-redis節點1 -n SnapCenter sce'
+** 「kubecll刪除pod sc-dresase-redis節點2 -n SnapCenter sce'
+
+
+. 刪除所有Redis Pod之後、請執行：「kubectl scale -複本=3 STs sc-dasions- redis節點- n SnapCenter fes'
+. 確認所有刪除的Pod是否都已啟動且正在執行。「Kubectl Get pod -n SnapCenter 架次」
+
+
+
+
+== 問題：重新啟動叢集節點後、工作發生故障
+
+*說明*在高可用度組態中、如果叢集的所有節點都當機、則會使高可用度叢集恢復正常運作狀態。當您重新啟動所有節點時、可能會看到工作發生故障、而精細的工作會變成灰色或逾時。
+
+*解決方案*您應該執行下列命令：
+
+. 登入Connector。
+. 儲存RabbitMQ statefulset（STS-）部署。
++
+** 「Docker執行-it cloudmanager_snapcenter --sh」
+** 「kubecl Get STS RabbitMQ -o yaml -n SnapCenter flexec> RabbitMQ_STs.yaml」
+
+
+. 識別連接至RabbitMQ Pod的持續磁碟區（PV）。「kubectl Get PV | grep RabbitMQ」
+. 刪除附加至RabbitMQ Pod的持續磁碟區宣告（PVCS）。「kubectl Get PVc -n SnapCenter feze| grep RabbitMQ | awk｛'print $1'｝| xargs kubectl DELETE PVc -n SnapCenter fas'
+. 刪除您先前在步驟3中識別的每個PV。「kubecll DELETE PV 'PVname'」
+. 建立RabbitMQ狀態。「kubecl create -f RabbitMQ_STs.yaml -n SnapCenter sety
+
+
+
+
+== 問題：在租戶資料庫建立期間、備份作業失敗
+
+*說明*如果啟動隨需或排程備份、則在建立租戶資料庫時、備份作業會失敗。
+
+*解決方案*建立租戶資料庫是SAP HANA系統的維護作業。
+
+建立租戶資料庫之前、您應該先使用SnapCenter 還原服務將SAP HANA系統置於維護模式。將SAP HANA系統置於維護模式之後、便無法啟動任何作業。
+
+建立租戶資料庫之後、您應該將SAP HANA系統恢復為正式作業模式。

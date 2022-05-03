@@ -1,0 +1,47 @@
+---
+sidebar: sidebar 
+permalink: whats-new.html 
+keywords: 'what"s new, features, new, release notes, bugs, limitations, known issues, enhancements, fixes' 
+summary: 深入瞭SnapCenter 解《服務》的新功能。 
+---
+= 更新功能SnapCenter
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+深入瞭SnapCenter 解《服務》的新功能。
+
+
+
+== 2021年12月21日
+
+
+
+=== Apache log4j弱點的修正程式
+
+感謝支援服務1.0.1將Apache log4j從2.9.1版升級至2.17版、以解決下列弱點：-2021至44228、-2021至4104及-2021至45105。SnapCenter
+
+支援此功能的叢集應自動更新至最新版本。SnapCenter您應該確定SnapCenter 「支援服務」UI中的版本顯示叢集為1.0.1.1251或更新版本。
+
+
+
+== 2021年10月13日
+
+
+
+=== 支援SnapCenter S檢修1.0.0
+
+* 支援NetApp®雲端儲存設備上執行的應用程式、可利用此服務提供資料保護功能。SnapCenterNetApp Cloud Manager內啟用的支援功能可為駐留在原地（anf）的SAP HANA®系統、提供高效率、應用程式一致且原則型的備份與還原功能。SnapCenter Azure NetApp Files
++
+link:concept-overview-architecture-limitation-functionalities-snapcenter-service.html["深入瞭SnapCenter 解支援服務"]
+
+* 您應該建立連接器、啟用SnapCenter 「還原服務」、新增SAP HANA系統、然後執行備份與還原作業。
++
+link:reference-get-started-snapcenter-service.html["開始使用"]
+
+

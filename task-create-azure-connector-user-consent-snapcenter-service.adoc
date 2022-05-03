@@ -1,0 +1,60 @@
+---
+sidebar: sidebar 
+permalink: task-create-azure-connector-user-consent-snapcenter-service.html 
+keywords: azure, connector, cloud central, snapcenter service, user consent, tenant admin, create connector, enable, disable, azure marketplace 
+summary: 在Azure中建立連接器SnapCenter 以利服務。 
+---
+= 在Azure中建立連接器SnapCenter 以利服務
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+客戶管理員應先部署Connector、然後才能使用Cloud Manager功能。Connector 可讓 Cloud Manager 管理公有雲環境中的資源與程序。
+
+根據預設、您可以從Azure Marketplace在Azure中建立連接器。執行的步驟 https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-launching-azure-mktp.html["從Azure Marketplace建立連接器"]請記住下列事項：
+
+* 只要Cloud Volumes ONTAP 指定Cloud Manager for Sfor Sfor、SnapCenter 就能運用相同的功能來執行支援服務。
+* 針對Cloud Manager名稱、請指定您的Connector VM名稱、以利識別。這會在Cloud Manager UI中顯示為連接器名稱。
+* 如果您已設定連接器而沒有公用IP或設定防火牆、則應該有跳接主機來連線至連接器機器。
+
+
+如果您有 https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-user-consent?tabs=azure-portal#user-consent-settings["使用者同意"^] 您可以在Azure Active Directory中啟用、或是如果租戶管理員可以提供同意、您可以從Cloud Manager UI建立Connector。
+
+
+
+== 已啟用使用者同意
+
+如果您的Azure Active Directory已啟用使用者同意、 https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-creating-connectors-azure.html["從Cloud Manager建立Connector"]。
+
+
+
+== 使用者同意已停用
+
+. 執行下列其中一項：
++
+** 如果系統管理員同意工作流程已設定在您的Active Directory中、您應該 https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-admin-consent-workflow#how-users-request-admin-consent["要求管理員同意"^]。
+** 如果未設定管理員同意工作流程、您應該：
++
+... https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/grant-admin-consent#construct-the-url-for-granting-tenant-wide-admin-consent["建構URL以授予全租戶管理員同意"^]。
++
+
+NOTE: 將clientID指定為_989efff4-9a9e-46fa-9f17-de39e15714f9_。這是Cloud Manager精靈中所命名的Cloud Manager Azure應用程式ID。
+
+... 請租戶管理員在瀏覽器中執行URL、並取得他的同意。
++
+您的管理員可以忽略顯示的錯誤
+
+
+
+
+
+. https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-creating-connectors-azure.html["從Cloud Manager建立Connector"]。
+
+
+
+IMPORTANT: 建立連接器時所提供的使用者名稱和密碼、或金鑰、都是連線至機器所需的

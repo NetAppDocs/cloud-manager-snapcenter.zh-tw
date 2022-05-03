@@ -1,0 +1,183 @@
+---
+sidebar: sidebar 
+permalink: task-enable-snapcenter-service-azure-netapp-files.html 
+keywords: enable snapcenter service, SAP HANA, azure netapp files, azure kubernetes service, AKS, connector, user assigned managed identity, permission, non-high availability, AKS cluster 
+summary: 使用Cloud Manager使用者介面啟用SnapCenter 「功能支援服務」。 
+---
+= 啟用SnapCenter 支援Azure NetApp Files 功能的支援功能
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+您可以SnapCenter 使用Cloud Manager UI啟用此功能。啟用此功能時、會建立Azure Kubernetes Service（aks）叢集、以裝載此服務。SnapCenter SnapCenter
+
+*您需要的是什麼*
+
+* 您應在Azure訂閱中註冊「Microsoft.ContainerService」資源供應商。如需相關資訊、請參閱 https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types#register-resource-provider["如何註冊資源提供者"^]。
+* 您應該確保一切順利 link:reference-prerequisites-azure-connector-snapcenter-service.html["先決條件"] 達成。
+
+
+*關於此工作*
+
+在建立Connector時、會在相同的資源群組和所選的相同子網路中建立高效能叢集。如果您建立的Connector沒有公有IP位址、則會以私有模式建立使用者叢集。
+
+使用者必須指派具有必要權限的託管身分識別、才能建立及管理高效能叢集。系統會建立指派給使用者的託管身分識別、並將其指派給Connector VM。
+
+*步驟*
+
+. 登入Cloud Manager。
+. 選取在Cloud Manager中建立的Connector。
++
+確保連接器的網路連線能力可保護至SAP HANA系統。
+
+. 按一下*所有服務*>* SnapCenter 《*》*《*啟用*》。
+. 執行下列其中一項：
++
+** 如果您已從Cloud Manager UI建立Connector、而且您有權限建立和指派角色、則SnapCenter 使用者指派的託管身分識別將會透過安裝此功能自動建立。
++
+... 選取*使用Azure登入*。
+... 在「Get Ready（準備就緒）」頁面上、按一下*繼續*。
+... 指定Azure認證資料。
++
+
+TIP: 您應確保Azure登入帳戶擁有足夠的權限。如需權限及如何指派權限的相關資訊、請參閱 <<Permissions required for Azure login account>>。
+
+
+
+** 如果您是從Azure市場建立Connector、或是沒有權限建立及指派角色、請依照下列步驟建立使用者指派的託管身分識別。
++
+... 選取*使用Azure CLI指令碼*。
+... 如果您對Azure帳戶沒有足夠的權限、請聯絡您的管理員。
++
+如需權限及如何指派權限的相關資訊、請參閱 <<Permissions required for Azure login account>>。
+
+... 下載 link:media/prerequisite_azure.sh["prerequisite_azure.sh"] 指令碼至您的本機系統。
+... 登入 https://azure.microsoft.com/en-in/features/azure-portal/["Microsoft Azure入口網站"^]。
+... 按一下 image:screenshot-azure-cloud-shell.png["Azure雲端Shell的快照"] 若要開啟雲端Shell並選取Bash主控台。
+... 將指令碼上傳至Azure雲端Shell。
+... 指派執行指令碼的權限。
++
+"chmod+x ./prerite_azure.sh"
+
+... 執行指令碼。
++
+prerequisite_azure.sh -s <dention_ID>-g <connector資源組名稱>-c <connector VM名稱>'
+
+
+
+
+
+. 在「Cluster Configuration」（叢集組態）頁面上、執行下列步驟：
++
+.. 選取叢集組態。
++
+*** 如果您選取*高可用度*、則會在可用區域之間建立一個Azure Kubernetes服務（KS）叢集、其中包含3個工作節點。
+*** 如果選擇*單一節點*、將會建立具有單一節點的高效能叢集。
+
+
+.. 指定Kubernetes Pod位址範圍。
++
+確保Kubernetes Pod位址範圍不會與虛擬網路、連接的虛擬網路、連接的內部部署網路的IP範圍重疊。此外、範圍不應與服務位址範圍和Docker橋接器位址重疊。
+
+.. 指定Kubernetes服務位址。
++
+確保Kubernetes服務位址範圍不會與虛擬網路、連接的虛擬網路、連接的虛擬網路和內部部署網路的IP範圍重疊。此外、範圍不應與Pod位址範圍和Docker橋接器位址重疊。
+
+.. 指定Docker橋接器網路。
++
+請確保Docker Bridge位址不會與虛擬網路的IP範圍、連接的虛擬網路、連接的虛擬網路和內部部署網路重疊。此外、範圍不應與Pod位址範圍和服務位址範圍重疊。
+
+.. 如果建立的Connector沒有公用IP、而且您在vnet上使用自訂DNS伺服器、請選取*支援自訂DNS伺服器*。
++
+
+IMPORTANT: 您應該在專屬DNS區域中為裝載自訂DNS伺服器的VNets建立虛擬網路連結。私有DNS區域名稱和資源群組名稱會顯示在UI上。
+
+
+
+. 在「檢閱」頁面上、檢閱詳細資料、然後按一下「*啟用*」。
+. 成功啟用SnapCenter 此功能後、按一下*「Finish」（完成）*。
+
+
+*結果*
+
+* 成功啟用SnapCenter 「支援不支援服務」之後、就會建立「高效能叢集」。您可以按一下以檢視「高」叢集詳細資料 image:screenshot-cluster-details.png["此圖示的快照可檢視叢集詳細資料"]。
++
+
+NOTE: 如果您無法啟用SnapCenter 此功能、可以修正問題、然後按一下*重試*。
+
+* 建立使用者指派的託管身分識別之後、系統會將其指派給自訂角色。
++
+** 指派給使用者的託管身分識別、將指派給具有下列Connector資源群組範圍權限的自訂角色：
++
+[source, json]
+----
+"Microsoft.Resources/subscriptions/resourceGroups/read",
+"Microsoft.ContainerService/managedClusters/read",
+"Microsoft.ContainerService/managedClusters/write",
+"Microsoft.ContainerService/managedClusters/delete",
+"Microsoft.ContainerService/managedClusters/listClusterUserCredential/action",
+"Microsoft.ManagedIdentity/userAssignedIdentities/assign/action",
+"Microsoft.ManagedIdentity/userAssignedIdentities/read",
+"Microsoft.Compute/virtualMachines/read",
+"Microsoft.Network/networkInterfaces/read"
+----
+** 指派給使用者的託管身分識別、將指派給具有下列Connector vnet權限的自訂角色：
++
+[source, json]
+----
+"Microsoft.Authorization/roleAssignments/read",
+"Microsoft.Network/virtualNetworks/subnets/join/action",
+"Microsoft.Network/virtualNetworks/subnets/read",
+"Microsoft.Network/virtualNetworks/read",
+"Microsoft.Network/virtualNetworks/join/action"
+----
+** 如果在子網路上設定路由表來路由傳送至防火牆、則指派給使用者的受管理身分識別將會指派給具有下列路由表範圍權限的自訂角色。
++
+[source, json]
+----
+"Microsoft.Network/routeTables/*",
+"Microsoft.Network/networkInterfaces/effectiveRouteTable/action",
+"Microsoft.Network/networkWatchers/nextHop/action"
+----
+** 如果連接器安裝時沒有公用IP、則指派給使用者的託管身分識別將會指派給自訂角色、並在私有DNS區域的範圍內具有下列權限。
++
+[source, json]
+----
+"Microsoft.Network/privateDnsZones/*"
+----
+
+
+
+
+
+
+== Azure登入帳戶所需的權限
+
+Azure登入帳戶可用來建立使用者指派的託管身分識別、必要角色、以及將身分識別指派給Connector VM。
+
+
+IMPORTANT: 登入帳戶的認證資料不會儲存在SnapCenter 任何地方、也不會用來呼叫API。認證資料僅用於UI中。
+
+*步驟*
+
+. 使用建立自訂角色 link:media/SnapCenter_Deployment_Role1.json["SnapCenter_Deployment角色、json"] 檔案：
++
+您應該使用Azure訂閱ID來取代SnapCenter_Deployment角色1.json檔案中的<Subscription_ID>。
+
+. 將角色指派給Connector資源群組範圍內的登入帳戶。
+. 使用建立自訂角色 link:media/SnapCenter_Deployment_Role2.json["SnapCenter_Deployment_ROl2.json"] 檔案：
++
+您應該使用Azure訂閱ID來取代SnapCenter_Deployment角色2.json檔案中的<Subscription_ID>。
+
+. 將角色指派給Connector vnet或更高版本範圍內的登入帳戶。
+. 如果您有 link:reference-prerequisites-azure-connector-snapcenter-service.html#firewall-configuration["已設定防火牆"]、使用建立自訂角色 link:media/SnapCenter-Deployment-Role3.json["SnapCenter-Deployment：角色3.json"] 檔案：
++
+您應將SnapCenter_Deployment角色3.json檔案中的<Subscription_ID>替換為Azure訂閱ID。
+
+. 將角色指派給位於路由表範圍內的登入帳戶、該表會附加到SnapCenter 該子網路。
+

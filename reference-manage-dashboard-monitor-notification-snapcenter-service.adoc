@@ -1,0 +1,41 @@
+---
+sidebar: sidebar 
+permalink: reference-manage-dashboard-monitor-notification-snapcenter-service.html 
+keywords: view dashboard, monitor operations, email notification, snapcenter service, SAP HANA, jobs 
+summary: 您可以監控已執行工作的狀態、接收電子郵件通知、以及檢視儀表板。 
+---
+= 管理營運
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+您可以監控已執行工作的狀態、接收電子郵件通知、以及檢視儀表板。
+
+
+
+== 監控工作
+
+按SnapCenter 一下「支援服務」頁面上的*工作監控*、即可檢視工作狀態。「工作監控」頁面會顯示整體摘要、並列出所有工作。
+
+然後按一下 image:screenshot-anf-view-system.png["可檢視詳細資料的圖示快照"] 以檢視詳細資料。
+
+image:screenshot-anf-job-monitor.png["工作監控頁面的快照"]
+
+
+
+== 電子郵件通知
+
+根據預設、系統會針對隨需備份、排程備份和還原作業失敗、傳送電子郵件通知。只有具備「帳戶管理員」角色的Cloud Manager使用者才會收到電子郵件。
+
+
+
+== 檢視儀表板
+
+按SnapCenter 一下「支援服務」頁面上的「*總覽*」、即可檢視保護摘要、組態詳細資料及工作狀態。
+
+image:screenshot-anf-dashboard.png["儀表板的快照"]

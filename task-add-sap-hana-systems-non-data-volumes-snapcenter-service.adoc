@@ -1,0 +1,72 @@
+---
+sidebar: sidebar 
+permalink: task-add-sap-hana-systems-non-data-volumes-snapcenter-service.html 
+keywords: add, snapcenter service, SAP HANA, add, auto discovery, HDB user store keys, HDBSQL client, non-data volumes 
+summary: 新增SAP HANA系統、然後新增非資料磁碟區。 
+---
+= 新增SAP HANA系統
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+手動新增SAP HANA系統。不支援自動探索SAP HANA系統。
+
+新增SAP HANA系統時、您應該新增HDB使用者儲存金鑰。HDB安全使用者存放區金鑰可用來將SAP HANA系統的連線資訊安全地儲存在用戶端上、而HDBSQL用戶端則使用安全的使用者存放區金鑰來連線至SAP HANA系統。
+
+
+NOTE: 如果使用SAP HANA叢集中的節點當機、您就無法新增或修改SAP HANA系統。
+
+*步驟*
+
+. 在「支援服務」頁面上、按一下SnapCenter 「* SAP HANA Systems*>* Add*」。
+. 在「系統詳細資料」頁面上、執行下列動作：
++
+.. 選取系統類型。
+.. 指定SAP HANA系統的SID。
+.. 指定SAP HANA系統名稱。
+.. 按一下HDB Secure User Store Keys（HDB安全使用者儲存金鑰）文字方塊以新增使用者儲存金鑰詳細資料
++
+指定金鑰名稱、系統詳細資料、使用者名稱和密碼。
+
+.. 按一下「 * 新增 * 」。
++
+
+NOTE: 如果您要新增多主機SAP HANA系統、則應該為每個主機新增使用者儲存金鑰。
+
+
+
+. 按一下 * 繼續 * 。
+. 在Storage Footprint頁面上、執行下列步驟：
++
+.. 選取工作環境並指定NetApp帳戶。
+.. 選取所需的磁碟區。
+.. 按一下「*新增儲存設備*」。
+
+
+. 按一下 * 繼續 * 。
+. 檢閱所有詳細資料、然後按一下*「Add*（新增*）」。
+
+
+您也可以編輯或移除SnapCenter 已新增至「支援服務」的SAP HANA系統。當您移除SAP HANA系統時、所有相關的備份和目錄項目都會刪除、不再受到保護。
+
+
+
+== 新增非資料磁碟區
+
+新增多租戶資料庫容器或單一容器類型的SAP HANA系統之後、即可新增HANA系統的非資料磁碟區。
+
+*步驟*
+
+. 在「支援服務」頁面上、按一下SnapCenter SAP HANA Systems。
++
+畫面會顯示所有新增至SnapCenter 該服務的系統。
+
+. 按一下 image:screenshot-anf-view-system.png["可檢視詳細資料的圖示快照"] 對應到您要新增非資料磁碟區的多租戶資料庫容器或單一容器類型系統。
+. 按一下「*新增非資料磁碟區*」。
+. 按一下「*新增儲存設備*」。
+

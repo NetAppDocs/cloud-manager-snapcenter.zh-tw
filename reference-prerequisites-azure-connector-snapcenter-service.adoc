@@ -1,0 +1,207 @@
+---
+sidebar: sidebar 
+permalink: reference-prerequisites-azure-connector-snapcenter-service.html 
+keywords: connector, prerequisites, firewall, network requirements, subnet, VNet, network security group, connectivity 
+summary: 在建立連接器並啟用SnapCenter 「支援服務」之前、請務必符合先決條件。 
+---
+= 建立連接器及啟用SnapCenter 「支援服務」的先決條件
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+在Azure中建立連接器並啟用SnapCenter 「功能性支援」之前、您應該先確定某些事項。
+
+* 請確定為連接器選擇的子網路不應與下列為Azure Kubernetes Service（AKS）保留的IP位址範圍重疊：169.254.0/16、172.30.0/16、172.31.0.0/16和192.0/24。
+* 確保所選子網路中沒有執行的問題。
+* 確保所選的子網路可存取各連接埠上的SAP HANA系統。
+* 如果所選子網路的vnet與SAP HANA系統的vnet不同、請確認VNets可以透過VPN閘道、對等或其他方式彼此通訊。
+* 如果您想要在SnapCenter 防火牆後啟用「支援服務」、請執行中所述的動作 <<Network requirements>>。
++
+您應該事先決定是否要在SnapCenter 防火牆後啟用「支援服務」。啟用SnapCenter 「支援服務」之後、您無法將其設定為在防火牆後執行。這是一個高峰限制。
+
+
+
+
+
+== 網路需求
+
+設定您的網路、以便Connector管理雲端環境中的資源和程序。
+
+
+
+=== 防火牆組態
+
+如果您想要在SnapCenter 防火牆後啟用「支援服務」、請執行下列動作。
+
+
+NOTE: 如果您使用Azure防火牆、可以使用指令碼執行這些步驟。如需相關資訊、請參閱 <<Azure Firewall configuration>>。
+
+*步驟*
+
+. 將下列網路規則新增至防火牆。
++
+[cols="4*"]
+|===
+| 目的地端點 | 傳輸協定 | 連接埠 | 註解 
+
+
+| https://docs.microsoft.com/en-us/azure/virtual-network/service-tags-overview#available-service-tags["服務標籤"^] - AzureCloud。<地區>:1194 | UDP | 1194 | 如果您打算擁有私有連接器和私有SnapCenter 的支援服務叢集、則不需要。 
+
+
+| https://docs.microsoft.com/en-us/azure/virtual-network/service-tags-overview#available-service-tags["服務標籤"^] - AzureCloud。<地區>：9000 | TCP | 9000 | 如果您打算擁有私有連接器和私有SnapCenter 的支援服務叢集、則不需要。 
+
+
+| FQDN：ntp.ubuntu.com:123 | UDP | 123. | Azure虛擬機器的時間同步化所需。 
+
+
+| https://docs.microsoft.com/en-us/azure/virtual-network/service-tags-overview#available-service-tags["服務標籤"^] - AzureCloud。<地區>:443 | TCP | 443.. | 如果您打算擁有私有連接器和私有SnapCenter 的支援服務叢集、則不需要。 
+|===
+. 在防火牆中新增應用程式規則、並附上下列FQDN標記和連接埠詳細資料：
++
+** FQDN標記- AzureKubernetesService
+** HTTPS：443
+
+
+. 新增以下端點作為目標FQDN的應用程式規則、其傳輸協定和連接埠為HTTPS：443。
++
+[cols="43,57"]
+|===
+| 端點 | 目的 
+
+
+| \https://management.azure.com \https://login.microsoftonline.com | 讓 Cloud Manager 能夠在 Cloud Volumes ONTAP 大多數 Azure 地區部署及管理功能。 
+
+
+| \https://management.microsoftazure.de \https://login.microsoftonline.de | 讓 Cloud Manager 能夠在 Cloud Volumes ONTAP Azure Germany 地區部署及管理功能。 
+
+
+| \https://management.usgovcloudapi.net \https://login.microsoftonline.com | 讓 Cloud Manager 能夠在 Cloud Volumes ONTAP Azure US Gov 地區部署及管理功能。 
+
+
+| \https://api.services.cloud.netpp.com | 允許API要求至NetApp Cloud Central。 
+
+
+| \https://cloud.support.netapp.com.s3.us-west-1.amazonaws.com | 提供軟體映像、資訊清單和範本的存取權限。 
+
+
+| \https://cognito-idp.us-east-1.amazonaws.com \https://cognito-identity.us-east-1.amazonaws.com \https://sts.amazonaws.com \https://cloud-support-netapp-com-accelerated.s3.amazonaws.com | 讓 Connector 能夠存取及下載資訊清單、範本及 Cloud Volumes ONTAP 升級影像。 
+
+
+| \https://cloudmanagerinfraprod.azurecr.io | 存取執行 Docker 之基礎架構的容器元件軟體映像、並提供與 Cloud Manager 整合服務的解決方案。 
+
+
+| \https://kinesis.us-east-1.amazonaws.com | 讓 NetApp 能夠從稽核記錄串流資料。 
+
+
+| \https://cloudmanager.cloud.netapp.com | 與Cloud Manager服務（包括NetApp帳戶）進行通訊。 
+
+
+| \https://netapp-cloud-account.auth0.com | 與 NetApp Cloud Central 通訊、以進行集中式使用者驗證。 
+
+
+| \https://support.netapp.com | 與 NetApp AutoSupport 通訊 
+
+
+| \https://cloud-support-netapp-com.s3.us-west-1.amazonaws.com | 與 NetApp 溝通以取得系統授權與支援登錄。 
+
+
+| \https://client.infra.support.netapp.com.s3.us-west-1.amazonaws.com \https://cloud-support-netapp-com-accelerated.s3.us-west-1.amazonaws.com | 讓 NetApp 能夠收集疑難排解支援問題所需的資訊。 
+
+
+| * .blob.core.windows.net | 使用 Proxy 時 HA 配對必須具備此功能。 
+
+
+| \https://auth0.com | 驗證驗證所需的項目。 
+
+
+| \https://registry-1.docker.io \https://auth.docker.io \https://production.cloudflare.docker.com | 擷取SnapCenter 相依於「支援服務」工作流程引擎的項目。 
+
+
+| \https://exteranl-log.cloudmanager.netapp.com | 允許通訊將記錄傳輸至Cloud Manager記錄儲存庫。 
+|===
+. 選擇您要安裝SnapCenter 的子網路。
+. 使用路由建立路由表：
++
+** 將流量從子網路轉送到防火牆內部IP位址
+** 將流量從防火牆的公用IP位址轉送到網際網路。
+
+
+. 將路由表附加至子網路。
+
+
+如需Cloud Manager Connector網路需求的相關資訊、請參閱 https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-networking-cloud-manager.html["連接器的網路需求"]。
+
+
+
+=== Azure防火牆組態
+
+如果您想要在SnapCenter Azure防火牆後啟用「支援服務」、請執行下列動作。
+
+*您需要的是什麼*
+
+* 您應該已經建立防火牆（傳統模式）。
+* 您應該已經建立Vnet和子網路以供SnapCenter 使用。
+* 如果您的防火牆資源和vnet SnapCenter of the不同時租戶、您應該登入Azure Shell中的兩個租戶。
+* 如果您的防火牆vnet和SnapCenter 物件不一樣、您應該在VNets之間建立對等關係。
+
+
+*步驟*
+
+. 下載 link:media/scs_azure_firewall_config.sh["scs_azure_firewall_config.sh"] 指令碼至您的本機系統。
+. 登入 https://azure.microsoft.com/en-in/features/azure-portal/["Microsoft Azure入口網站"^]。
+. 按一下 image:screenshot-azure-cloud-shell.png["Azure雲端Shell的快照"] 若要開啟雲端Shell並選取Bash主控台。
++
+.. 將指令碼上傳至Azure雲端Shell。
+.. 指派執行指令碼的權限。
++
+"chmod+x ./sSC_azure_firewall_config.sh"
+
+.. 執行指令碼。
++
+/scs_azure_firewall_config.sh -fwsubid <Firewall_SubscriptionID>-fwname <Firewall_name>-fwrg <Firewall_Resource_Group>-scssubid <SnapCenter_Service_SubscriptionID>-scsvnet <SnapCenter_Service_net_name>-Snapscra_Resource <Snapscr_Center_Service_net_name>
+
++
+
+NOTE: 如果您尚未建立資源群組、指令碼會建立資源群組。建立Connector時、您可以使用相同的資源群組、讓SnapCenter 所有的相關資源都位於相同的資源群組中。
+
+
+
+
+
+*結果*
+
+* 已設定防火牆規則。
+* 系統會建立資源群組以供SnapCenter 支援服務使用。
+* 路由表會在SnapCenter 「支援服務」資源群組中建立。
+* 已設定路由表規則。
+* 路由表會附加至子網路。
+
+
+
+
+=== 連線至HANA系統
+
+支援服務叢集需要使用HDBSQL命令、與使用者網路中的HANA系統進行通訊。SnapCenter需要使用各種網路架構來允許使用叢集與HANA系統之間的通訊通道SnapCenter 、例如：
+
+* 連接器和SnapCenter S檢修 叢集部署在HANA系統的相同vnet上
+* 連接器和SnapCenter 物件服務叢集部署在不同於HANA系統的Vnet中、並使用2個VNets之間的vnet對等機制來建立通訊。
+* 連接器和SnapCenter 物件服務叢集部署在不同於HANA系統的Vnet中、並使用兩個VNets之間的VPN閘道來建立通訊。
+
+
+
+
+=== 安全性群組組態
+
+如果在HANA系統中設定了網路安全群組（NSG）、則應允許傳入通訊、從SnapCenter 支援服務的連接埠、到使用者存放區金鑰中指定的HANA系統連接埠。
+
+* 傳輸協定：All TCP
+* 子網路：SnapCenter 叢集子網路的功能
+* 目的：執行HDBSQL命令
+
+
+執行於支援SSL的HANA系統SnapCenter 、可在支援SSL的情況下、與執行此功能的HANA叢集進行SSL通訊。

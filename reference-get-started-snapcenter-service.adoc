@@ -1,0 +1,47 @@
+---
+sidebar: sidebar 
+permalink: reference-get-started-snapcenter-service.html 
+keywords: snapcenter service, getting started, connector, HDBSQL client, SAP HANA systems, protect SAP HANA systems 
+summary: 部署SnapCenter 「支援服務」及保護資料的工作。 
+---
+= 開始使用
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+立即開始SnapCenter 使用支援服務、只需幾個步驟即可保護您的資料。
+
+[role="quick-margin-para"]
+您應該 https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-signing-up.html["註冊NetApp Cloud Central"]、 https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-logging-in.html["登入Cloud Manager"]，然後設定 https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-setting-up-netapp-accounts.html["NetApp帳戶"]。
+
+[role="quick-margin-para"]
+只有帳戶管理員才能部署SnapCenter 此功能。不過、帳戶管理員和SnapCenter 支援部門可以執行不同的作業。 https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-user-roles.html["深入瞭解"]
+
+[role="quick-margin-para"]
+您應該確保一切順利 link:reference-prerequisites-azure-connector-snapcenter-service.html["先決條件"] 建立連接器並啟用SnapCenter 「支援不支援服務」。
+
+[role="quick-margin-para"]
+您應該 link:task-create-azure-connector-user-consent-snapcenter-service.html["在Azure中建立連接器SnapCenter 以利服務"]。
+
+[role="quick-margin-para"]
+如果您的連接器符合所有先決條件、您可以使用該連接器。
+
+[role="quick-margin-para"]
+在 Azure NetApp Files Cloud Manager 中建立一個可運作的環境、以建立及管理 NetApp 帳戶、容量資源池、磁碟區和快照。 https://docs.netapp.com/us-en/cloud-manager-azure-netapp-files/task-manage-anf.html["深入瞭解"]
+
+[role="quick-margin-para"]
+您應該 link:task-enable-snapcenter-service-azure-netapp-files.html["啟用SnapCenter 支援服務"] 使用Cloud Manager UI。啟用此功能時、會建立Azure Kubernetes Service（aks）叢集、以裝載此服務。SnapCenter SnapCenter
+
+[role="quick-margin-para"]
+您應該 link:task-install-hdbsql-client-snapcenter-service.html["安裝HDBSQL用戶端"] 在SAP HANA資料庫上執行資料保護作業。HDBSQL用戶端用於與SAP HANA系統通訊。
+
+[role="quick-margin-para"]
+您應該手動進行 link:task-add-sap-hana-systems-non-data-volumes-snapcenter-service.html["新增SAP HANA系統"]。
+
+[role="quick-margin-para"]
+您可以這樣做 link:task-create-backup-ondemand-policies-schedule-sap-hana.html["備份SAP HANA系統"] 使用系統定義或自訂原則。萬一資料遺失、您可以 link:restore-sap-hana-systems.html["還原SAP HANA系統"] 使用該系統的備份。

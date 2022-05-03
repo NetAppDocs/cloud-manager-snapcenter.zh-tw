@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blocks>
+  <block id="3dc87d09ceccd7dcab8ae39abb6d9c10" category="summary">使用Cloud Manager使用者介面啟用SnapCenter 「功能支援服務」。</block>
+  <block id="be2ee59845a89af945b9900a0c3b1f67" category="doc">啟用SnapCenter 支援Azure NetApp Files 功能的支援功能</block>
+  <block id="3a3768e823613248feaad95ceda47f21" category="paragraph">您可以SnapCenter 使用Cloud Manager UI啟用此功能。啟用此功能時、會建立Azure Kubernetes Service（aks）叢集、以裝載此服務。SnapCenter SnapCenter</block>
+  <block id="d428ebb7ac02e1484781b38a799a4f99" category="paragraph">*您需要的是什麼*</block>
+  <block id="21b9eb1efd8b70406b4d239438045123" category="inline-link">如何註冊資源提供者</block>
+  <block id="4c2916034cfe6a8138586a68380d161c" category="list-text">您應在Azure訂閱中註冊「Microsoft.ContainerService」資源供應商。如需相關資訊、請參閱<block ref="a5340f0c3f9202a4bfd6638d23ad9a4b" category="inline-link-rx"></block>。</block>
+  <block id="b5b8e67d6a37d24ad73c89e4c7ac8c9e" category="inline-link-macro">先決條件</block>
+  <block id="c14783958a779e1c625baa499b250c96" category="list-text">您應該確保一切順利 <block ref="cd1f0a1ac9ccb619090e02c1e37e4de7" category="inline-link-macro-rx"></block> 達成。</block>
+  <block id="78166ce4ccceeedfbf6aeb8682851072" category="paragraph">*關於此工作*</block>
+  <block id="22a09b9a7dfc74966da65969b2c367b5" category="paragraph">在建立Connector時、會在相同的資源群組和所選的相同子網路中建立高效能叢集。如果您建立的Connector沒有公有IP位址、則會以私有模式建立使用者叢集。</block>
+  <block id="6c359fa681ceea28a725673484924d6b" category="paragraph">使用者必須指派具有必要權限的託管身分識別、才能建立及管理高效能叢集。系統會建立指派給使用者的託管身分識別、並將其指派給Connector VM。</block>
+  <block id="4839d2f25cc35b249d5db15efa1afd75" category="paragraph">*步驟*</block>
+  <block id="729cc9d7e54c8d71f7ace34db42226de" category="list-text">登入Cloud Manager。</block>
+  <block id="14b5a071cf1b900de8c97da1b8f279f3" category="list-text">選取在Cloud Manager中建立的Connector。</block>
+  <block id="dfa9b1ee29c2645a689f874096d73396" category="paragraph">確保連接器的網路連線能力可保護至SAP HANA系統。</block>
+  <block id="283f9473eb9458de0fd9adf0fab78b5b" category="list-text">按一下*所有服務*&gt;* SnapCenter 《*》*《*啟用*》。</block>
+  <block id="40827a860546af59127b7a2ff41eb4ce" category="list-text">執行下列其中一項：</block>
+  <block id="ae1d1de7c751935ee6ce99a819d419b5" category="list-text">如果您已從Cloud Manager UI建立Connector、而且您有權限建立和指派角色、則SnapCenter 使用者指派的託管身分識別將會透過安裝此功能自動建立。</block>
+  <block id="835dd5163f5fb3fc890b98aa6ffe6c7c" category="list-text">選取*使用Azure登入*。</block>
+  <block id="401c69da1c246a377a45bd698a89743b" category="list-text">在「Get Ready（準備就緒）」頁面上、按一下*繼續*。</block>
+  <block id="96bcfaa3a489189358b155804a699cc2" category="list-text">指定Azure認證資料。</block>
+  <block id="d41d8cd98f00b204e9800998ecf8427e" category="inline-xref"></block>
+  <block id="739c3add6b56e3f81cd753c439799b73" category="admonition">您應確保Azure登入帳戶擁有足夠的權限。如需權限及如何指派權限的相關資訊、請參閱 <block ref="4f9b67529ab7a758217700811268efd3" category="inline-xref-macro-rx"></block>。</block>
+  <block id="a7f9f10826bede906b76e11a793ae7b4" category="list-text">如果您是從Azure市場建立Connector、或是沒有權限建立及指派角色、請依照下列步驟建立使用者指派的託管身分識別。</block>
+  <block id="a331f81ba0072140f25008971dba85b6" category="list-text">選取*使用Azure CLI指令碼*。</block>
+  <block id="53aa3641eeadb7426fdd8e46cccc2890" category="list-text">如果您對Azure帳戶沒有足夠的權限、請聯絡您的管理員。</block>
+  <block id="8210452993bff6e60f44de83bd5f33b1" category="paragraph">如需權限及如何指派權限的相關資訊、請參閱 <block ref="4f9b67529ab7a758217700811268efd3" category="inline-xref-macro-rx"></block>。</block>
+  <block id="9d244729a97a8bd02265b2e65094db39" category="inline-link-macro">prerequisite_azure.sh</block>
+  <block id="8f312c3506d7b080031c7d0ef575198f" category="list-text">下載 <block ref="9ffe7367cb8a4adc774ad11fd0691faa" category="inline-link-macro-rx"></block> 指令碼至您的本機系統。</block>
+  <block id="26d0a1022b03f4ffe6de4d98e6a49cc2" category="inline-link">Microsoft Azure入口網站</block>
+  <block id="f0516e5c83e81b0be819d2e49967b8ef" category="list-text">登入<block ref="be05a730e7fbdc2cc6504fccb0d15d76" category="inline-link-rx"></block>。</block>
+  <block id="db75ad7e6f88c58f5b77ff9699190c20" category="inline-image-macro">Azure雲端Shell的快照</block>
+  <block id="cb9c4e33773bbb43c0f31fb324c6397c" category="list-text">按一下 <block ref="675928dc3c407a9d792f8097bea153a3" category="inline-image-macro-rx" type="image"></block> 若要開啟雲端Shell並選取Bash主控台。</block>
+  <block id="c1e10f9d2da10dd930a016278cd69bde" category="list-text">將指令碼上傳至Azure雲端Shell。</block>
+  <block id="3dd3a2392b429c72b9b402e9f78a5669" category="list-text">指派執行指令碼的權限。</block>
+  <block id="2f7c8d262b548b8e2c88a780efe067aa" category="paragraph">"chmod+x ./prerite_azure.sh"</block>
+  <block id="3ffb93c401d278c605ef87fdc061d339" category="list-text">執行指令碼。</block>
+  <block id="fc784b0e571a669db1509478d57ebb67" category="paragraph">prerequisite_azure.sh -s &lt;dention_ID&gt;-g &lt;connector資源組名稱&gt;-c &lt;connector VM名稱&gt;'</block>
+  <block id="2b4cec00b067bdd9cc6219e54c5807d2" category="list-text">在「Cluster Configuration」（叢集組態）頁面上、執行下列步驟：</block>
+  <block id="5b2162e403c24f290faaead7038f6524" category="list-text">選取叢集組態。</block>
+  <block id="b5928486b41345234027e86c0adaafdf" category="list-text">如果您選取*高可用度*、則會在可用區域之間建立一個Azure Kubernetes服務（KS）叢集、其中包含3個工作節點。</block>
+  <block id="0e5a823d6ecc4b327d8160aaf73c84d4" category="list-text">如果選擇*單一節點*、將會建立具有單一節點的高效能叢集。</block>
+  <block id="57f52c63cf91b6d1a43ad73714de5b9d" category="list-text">指定Kubernetes Pod位址範圍。</block>
+  <block id="33ec1cf7929473390c2e32c3b9ac7b45" category="paragraph">確保Kubernetes Pod位址範圍不會與虛擬網路、連接的虛擬網路、連接的內部部署網路的IP範圍重疊。此外、範圍不應與服務位址範圍和Docker橋接器位址重疊。</block>
+  <block id="a1ac022551c874ff0da8334e3ba7eeaf" category="list-text">指定Kubernetes服務位址。</block>
+  <block id="a1fdd03364b6f7baf683cd7d60608599" category="paragraph">確保Kubernetes服務位址範圍不會與虛擬網路、連接的虛擬網路、連接的虛擬網路和內部部署網路的IP範圍重疊。此外、範圍不應與Pod位址範圍和Docker橋接器位址重疊。</block>
+  <block id="380faeff04d1f2e081b62a6f940a4349" category="list-text">指定Docker橋接器網路。</block>
+  <block id="2d24f9b2445554ae4201ce2f216890c0" category="paragraph">請確保Docker Bridge位址不會與虛擬網路的IP範圍、連接的虛擬網路、連接的虛擬網路和內部部署網路重疊。此外、範圍不應與Pod位址範圍和服務位址範圍重疊。</block>
+  <block id="cb49c5d9ce3127199979ee9d77d83c46" category="list-text">如果建立的Connector沒有公用IP、而且您在vnet上使用自訂DNS伺服器、請選取*支援自訂DNS伺服器*。</block>
+  <block id="8084bd1bc1db48d72b61e770f4c739ab" category="admonition">您應該在專屬DNS區域中為裝載自訂DNS伺服器的VNets建立虛擬網路連結。私有DNS區域名稱和資源群組名稱會顯示在UI上。</block>
+  <block id="18622b192aba11482b2e7bb448c9e341" category="list-text">在「檢閱」頁面上、檢閱詳細資料、然後按一下「*啟用*」。</block>
+  <block id="88f6bf6f180f305019de968f8e4ed04b" category="list-text">成功啟用SnapCenter 此功能後、按一下*「Finish」（完成）*。</block>
+  <block id="03ca1a8893eafac750fe33e2998cfff3" category="paragraph">*結果*</block>
+  <block id="f3591f8ec2bce4141c70e25d03099af0" category="inline-image-macro">此圖示的快照可檢視叢集詳細資料</block>
+  <block id="b1d432ac0467bad7286587b69ab3bdf4" category="list-text">成功啟用SnapCenter 「支援不支援服務」之後、就會建立「高效能叢集」。您可以按一下以檢視「高」叢集詳細資料 <block ref="0ccef70ccec4e6668bd069bc9e450b90" category="inline-image-macro-rx" type="image"></block>。</block>
+  <block id="05a60c66a7fd4fe205dc483ec105ae26" category="admonition">如果您無法啟用SnapCenter 此功能、可以修正問題、然後按一下*重試*。</block>
+  <block id="0cbadb2e572556f20e7c908d946b29d0" category="list-text">建立使用者指派的託管身分識別之後、系統會將其指派給自訂角色。</block>
+  <block id="c51a9cf78ee307575a6f3bd555b7121c" category="list-text">指派給使用者的託管身分識別、將指派給具有下列Connector資源群組範圍權限的自訂角色：</block>
+  <block id="ed88aa6f0446d738dc637a49b8caf9c2" category="list-text">指派給使用者的託管身分識別、將指派給具有下列Connector vnet權限的自訂角色：</block>
+  <block id="a5638f3ad3dae0022a2003cc25ae9c89" category="list-text">如果在子網路上設定路由表來路由傳送至防火牆、則指派給使用者的受管理身分識別將會指派給具有下列路由表範圍權限的自訂角色。</block>
+  <block id="4bc6c96275f3ce20b2e5a8db5c39cb74" category="list-text">如果連接器安裝時沒有公用IP、則指派給使用者的託管身分識別將會指派給自訂角色、並在私有DNS區域的範圍內具有下列權限。</block>
+  <block id="06f23eb1a1134b1c02b3e5511ca0107f" category="section-title">Azure登入帳戶所需的權限</block>
+  <block id="f22722d582b39bf0aca5980b3ef8b95d" category="paragraph">Azure登入帳戶可用來建立使用者指派的託管身分識別、必要角色、以及將身分識別指派給Connector VM。</block>
+  <block id="9dc3609645e42b94243c54ac097b1e77" category="admonition">登入帳戶的認證資料不會儲存在SnapCenter 任何地方、也不會用來呼叫API。認證資料僅用於UI中。</block>
+  <block id="93c163b15cfb7ccd86bd3f8dd66ca760" category="inline-link-macro">SnapCenter_Deployment角色、json</block>
+  <block id="0c867b8155e040c3f303496add1c3fdf" category="list-text">使用建立自訂角色 <block ref="2111e9e93105bc298bf796f8171372d5" category="inline-link-macro-rx"></block> 檔案：</block>
+  <block id="e90d2c1e3768308d55a5ed4d8016c4c3" category="paragraph">您應該使用Azure訂閱ID來取代SnapCenter_Deployment角色1.json檔案中的&lt;Subscription_ID&gt;。</block>
+  <block id="1ed30b0b57384e6bef75baaf6608d5fb" category="list-text">將角色指派給Connector資源群組範圍內的登入帳戶。</block>
+  <block id="81cd305ef2319ed6c3dd14d5dd76a921" category="inline-link-macro">SnapCenter_Deployment_ROl2.json</block>
+  <block id="912e8982329b63124135cef9881bd821" category="list-text">使用建立自訂角色 <block ref="d337ff2da621ff11490eb6f8cb0173a7" category="inline-link-macro-rx"></block> 檔案：</block>
+  <block id="6611c5f39a8fae0c5e592c3cc4850846" category="paragraph">您應該使用Azure訂閱ID來取代SnapCenter_Deployment角色2.json檔案中的&lt;Subscription_ID&gt;。</block>
+  <block id="254d2168d6d9ce9105b32189aad036b3" category="list-text">將角色指派給Connector vnet或更高版本範圍內的登入帳戶。</block>
+  <block id="a3db22cc7ee9cfa8f883484c38d89f90" category="inline-link-macro">已設定防火牆</block>
+  <block id="9a1ed59d7570d4de6470ea767eeb7f82" category="inline-link-macro">SnapCenter-Deployment：角色3.json</block>
+  <block id="863827e4c7886f0fd5b5a07ee599ea70" category="list-text">如果您有 <block ref="e0ac1792ab820c915d93dd5986b1d51a" category="inline-link-macro-rx"></block>、使用建立自訂角色 <block ref="6974f979e7898349c6b14a2fd521e98a" category="inline-link-macro-rx"></block> 檔案：</block>
+  <block id="441a9f1e64f137fbeac0669186a438f6" category="paragraph">您應將SnapCenter_Deployment角色3.json檔案中的&lt;Subscription_ID&gt;替換為Azure訂閱ID。</block>
+  <block id="c188b8c4b880533d8efaca0cd06edd53" category="list-text">將角色指派給位於路由表範圍內的登入帳戶、該表會附加到SnapCenter 該子網路。</block>
+  <block id="9998e542affb998a1071422d2fa357a2" category="summary">Cloud Manager內建的支援功能可為駐留在原地的SAP HANA系統提供高效率、應用程式一致且原則型的備份與還原功能。SnapCenter Azure NetApp Files</block>
+  <block id="62b15c6416b971695b696987cd557ace" category="doc">支援服務文件SnapCenter</block>
+  <block id="1b592902fdb11c82611378e3ec52d0e5" category="summary">疑難排解SnapCenter 功能支援服務問題。</block>
+  <block id="7a4e5e5bc542eae2d10e3506f839f2ae" category="doc">疑難排解問題</block>
+  <block id="f2988107909ad16194c70b71386ca695" category="section-title">問題：Redis Pod陷入CrashLooper BackOff狀態</block>
+  <block id="ee9fbf27d140ce1532e0146065dcd21f" category="paragraph">*說明*在高可用度組態中、如果叢集的所有節點都當機、則會使高可用度叢集恢復正常運作狀態。當您重新啟動所有節點時、可能會發現所有的Redis Pod都處於CrashLooper BackOff狀態。</block>
+  <block id="2303ba437b09df11bb2d2530aab9a14e" category="paragraph">*解決方案*您應該執行下列命令來還原系統。</block>
+  <block id="6a0c197ad53eaaf3842eef70258f4f4a" category="list-text">登入Connector。</block>
+  <block id="8ad9550e2dc33934b88363a91feab2db" category="list-text">刪除所有Redis Pod。</block>
+  <block id="9b1e1181fa77af9c55443c40c2859c10" category="list-text">「Docker執行-it cloudmanager_snapcenter --sh」</block>
+  <block id="fb720cb6e88402dcec030a303a678403" category="list-text">「kubectl scale -複本= 0 STS-dasions- redis節點- n SnapCenter 」</block>
+  <block id="4519eb841982c3b3c417960eea91e49d" category="list-text">確認是否已刪除所有Redis Pod。「kubecll Get pod -n SnapCenter 架次」</block>
+  <block id="ee9ee650321b44ac20b03a9890997106" category="list-text">如果Redis Pod未刪除、請執行下列命令：</block>
+  <block id="26252079e3bdda987e334cfd1aa1c565" category="list-text">「kubecll刪除pod sc-das依賴 關係-redis節點-0 -n SnapCenter sce'</block>
+  <block id="35fe5b07eaee36afcfc179c2159c525a" category="list-text">「kubecll刪除pod sc-dresase-redis節點1 -n SnapCenter sce'</block>
+  <block id="5d130dac3d502f4a74a70f9daf7fe0aa" category="list-text">「kubecll刪除pod sc-dresase-redis節點2 -n SnapCenter sce'</block>
+  <block id="ddd9c32f0cc1260071888b3e7b8fcd7c" category="list-text">刪除所有Redis Pod之後、請執行：「kubectl scale -複本=3 STs sc-dasions- redis節點- n SnapCenter fes'</block>
+  <block id="a144b2704d2f5c0b193bb0de485d2363" category="list-text">確認所有刪除的Pod是否都已啟動且正在執行。「Kubectl Get pod -n SnapCenter 架次」</block>
+  <block id="41fc35af1363342b9cf9ddc8e9a13ad9" category="section-title">問題：重新啟動叢集節點後、工作發生故障</block>
+  <block id="621e2561c049659415009afc8c0e2b5a" category="paragraph">*說明*在高可用度組態中、如果叢集的所有節點都當機、則會使高可用度叢集恢復正常運作狀態。當您重新啟動所有節點時、可能會看到工作發生故障、而精細的工作會變成灰色或逾時。</block>
+  <block id="4a47842ec9ee4b794f06db8307d4776a" category="paragraph">*解決方案*您應該執行下列命令：</block>
+  <block id="999b922f1ecfac1a619dac3af5c0dce6" category="list-text">儲存RabbitMQ statefulset（STS-）部署。</block>
+  <block id="563567628edf5ecb1b41f680b1b47a86" category="list-text">「kubecl Get STS RabbitMQ -o yaml -n SnapCenter flexec&gt; RabbitMQ_STs.yaml」</block>
+  <block id="238949b8b326f4d2c5fae1de7ef0cfb4" category="list-text">識別連接至RabbitMQ Pod的持續磁碟區（PV）。「kubectl Get PV | grep RabbitMQ」</block>
+  <block id="3764f4d281ff7fe37d0970776a27f7dd" category="list-text">刪除附加至RabbitMQ Pod的持續磁碟區宣告（PVCS）。「kubectl Get PVc -n SnapCenter feze| grep RabbitMQ | awk｛'print $1'｝| xargs kubectl DELETE PVc -n SnapCenter fas'</block>
+  <block id="c592bd1c6b7ed1b630e7563e447d3950" category="list-text">刪除您先前在步驟3中識別的每個PV。「kubecll DELETE PV 'PVname'」</block>
+  <block id="db44e2317048d63dd5bd906742b9fa70" category="list-text">建立RabbitMQ狀態。「kubecl create -f RabbitMQ_STs.yaml -n SnapCenter sety</block>
+  <block id="3db98fc7ac0a63ba0bb727b9ca5eb864" category="section-title">問題：在租戶資料庫建立期間、備份作業失敗</block>
+  <block id="ad6ab9308a0a7ca31d68fe9cdd997f9a" category="paragraph">*說明*如果啟動隨需或排程備份、則在建立租戶資料庫時、備份作業會失敗。</block>
+  <block id="b4a0a531c0c52c12ad810b7c517a16e1" category="paragraph">*解決方案*建立租戶資料庫是SAP HANA系統的維護作業。</block>
+  <block id="6e301028bad33b0dd3983c7e30f9a614" category="paragraph">建立租戶資料庫之前、您應該先使用SnapCenter 還原服務將SAP HANA系統置於維護模式。將SAP HANA系統置於維護模式之後、便無法啟動任何作業。</block>
+  <block id="5e65789650270172a268777aa7778e17" category="paragraph">建立租戶資料庫之後、您應該將SAP HANA系統恢復為正式作業模式。</block>
+  <block id="1bc534d3a549cf9d28257f63406e41b1" category="summary">部署SnapCenter 「支援服務」及保護資料的工作。</block>
+  <block id="be11c74c1dd7f307bb80183a90dc2067" category="doc">開始使用</block>
+  <block id="e65fd4b36cb902004ec1a11e44a4c354" category="paragraph">立即開始SnapCenter 使用支援服務、只需幾個步驟即可保護您的資料。</block>
+  <block id="63785c950a9f3cb1e82193ec1f7e49ee" category="inline-link">註冊NetApp Cloud Central</block>
+  <block id="5970bd5da21d70901770347c11bbaaaf" category="inline-link">登入Cloud Manager</block>
+  <block id="ac252743de820aac9183d9f76d4bed67" category="inline-link">NetApp帳戶</block>
+  <block id="86bec2b503d4dec9a1ffb315606dc667" category="paragraph">您應該<block ref="5cb109f8a8e5675d2e8c5b54af0532f1" category="inline-link-rx"></block>、<block ref="558fe3e3f4f3e63d21b8ca7813dfa135" category="inline-link-rx"></block>，然後設定<block ref="b082658bf20535a05706a08508f2a8d9" category="inline-link-rx"></block>。</block>
+  <block id="d59048f21fd887ad520398ce677be586" category="inline-link">深入瞭解</block>
+  <block id="022efd5090caa2418ad993b475772e69" category="paragraph">只有帳戶管理員才能部署SnapCenter 此功能。不過、帳戶管理員和SnapCenter 支援部門可以執行不同的作業。<block ref="d4cc89b52e0cac1db05e025bf33f08d9" category="inline-link-rx"></block></block>
+  <block id="39e69ac37fb251f3818627df9aa4d9ea" category="paragraph">您應該確保一切順利 <block ref="cd1f0a1ac9ccb619090e02c1e37e4de7" category="inline-link-macro-rx"></block> 建立連接器並啟用SnapCenter 「支援不支援服務」。</block>
+  <block id="9ee90c6524cb5493257b2167abc94c5c" category="inline-link-macro">在Azure中建立連接器SnapCenter 以利服務</block>
+  <block id="78bf075f7f0edb1d896bb4c6c7bd7362" category="paragraph">您應該 <block ref="5ad60cb54c8ecef9da681eecaf4e90e1" category="inline-link-macro-rx"></block>。</block>
+  <block id="9d5934b77e867f1b75d620dd08a6e0f0" category="paragraph">如果您的連接器符合所有先決條件、您可以使用該連接器。</block>
+  <block id="b64b2b53d400def2feca4370a3cf601a" category="paragraph">在 Azure NetApp Files Cloud Manager 中建立一個可運作的環境、以建立及管理 NetApp 帳戶、容量資源池、磁碟區和快照。<block ref="f46c57a6bf45e3321a0fcc33e47a933b" category="inline-link-rx"></block></block>
+  <block id="11f76b038128e01dcdb73916098c6f21" category="inline-link-macro">啟用SnapCenter 支援服務</block>
+  <block id="60f450f51e7bf51d696f48e7b8e2d6b9" category="paragraph">您應該 <block ref="95196f4486c5abc890f5200c3e06f568" category="inline-link-macro-rx"></block> 使用Cloud Manager UI。啟用此功能時、會建立Azure Kubernetes Service（aks）叢集、以裝載此服務。SnapCenter SnapCenter</block>
+  <block id="ffb862d6ed4e03ace7edee600ef7f672" category="inline-link-macro">安裝HDBSQL用戶端</block>
+  <block id="d172da855363d6592015eb7e821d6534" category="paragraph">您應該 <block ref="c64511877800dd2ca76964d31f90bdd5" category="inline-link-macro-rx"></block> 在SAP HANA資料庫上執行資料保護作業。HDBSQL用戶端用於與SAP HANA系統通訊。</block>
+  <block id="3eff3160e226ee94088d7a82b1742b31" category="inline-link-macro">新增SAP HANA系統</block>
+  <block id="192142597dd573a9f759d937a19109c0" category="paragraph">您應該手動進行 <block ref="ad4858f7b6e931d2709e711994be5bec" category="inline-link-macro-rx"></block>。</block>
+  <block id="07782826fd770f3a08620e4eab9fd47f" category="inline-link-macro">備份SAP HANA系統</block>
+  <block id="7ac15f47230ee764753f9724930e69bc" category="inline-link-macro">還原SAP HANA系統</block>
+  <block id="92b4e69a93f43e9e73eb3aca3275452e" category="paragraph">您可以這樣做 <block ref="e03ba2dd6debe0d2fabf0efa21c8c79e" category="inline-link-macro-rx"></block> 使用系統定義或自訂原則。萬一資料遺失、您可以 <block ref="95aa2756e80acc49f6bc0248eab64b5a" category="inline-link-macro-rx"></block> 使用該系統的備份。</block>
+  <block id="57ee7a6bafea27c646cb01aafe7dd10b" category="summary">支援NetApp®雲端儲存設備上執行的應用程式、可利用此服務提供資料保護功能。SnapCenter</block>
+  <block id="fbfdf1d6957e93185289dd5c3d913313" category="doc">深入瞭SnapCenter 解支援服務</block>
+  <block id="2857bf9cdb09e82d142fcf8c75e3dddd" category="paragraph">支援NetApp®雲端儲存設備上執行的應用程式、可利用此服務提供資料保護功能。SnapCenterNetApp Cloud Manager內啟用的支援功能可為駐留在原地的SAP HANA®系統、提供高效率、應用程式一致、原則型的備份與還原功能。SnapCenter Azure NetApp Files</block>
+  <block id="2d242bb36ec91b32005f9296ff03a912" category="section-title">架構</block>
+  <block id="513a2390db98d4f0ba37da28a7d1587d" category="paragraph">支援下列元件的架構SnapCenter ：</block>
+  <block id="0cb78051937dcdfa481a00adfe92b44c" category="list-text">支援服務UI與Cloud Manager使用者介面整合。SnapCenter</block>
+  <block id="5e402e5733f23466f909b4dddce5ce9d" category="paragraph">透過NetApp管理的Cloud Manager SaaS架構提供支援、提供多種儲存與資料管理功能。SnapCenter</block>
+  <block id="c62eff60a207d361457d7988554c47e9" category="list-text">Cloud Manager Connector是Cloud Manager的一個元件、可管理SnapCenter 整個過程中的各種功能、包括支援各種服務。</block>
+  <block id="0b9e0b328d8020e082a1f884358906c1" category="list-text">支援支援支援Azure Kubernetes Service（以下稱為「支援服務」）的一組資料保護服務、可協調資料保護工作流程。SnapCenter</block>
+  <block id="d661ac57836862a50ff660a3a5ef7050" category="admonition">Cloud Manager Connector與SnapCenter 《支援服務：雲端管理程式」已部署在您的雲端網路中。</block>
+  <block id="598cf35ade704319b9e8bddff2c8ceed" category="paragraph">下圖顯示SnapCenter 了各個元件之間的關係：</block>
+  <block id="d93e5f790e67aaca6355f62dc92171a9" category="inline-image-macro">《支援服務架構：SnapCenter</block>
+  <block id="b80b3f02255d5bb643bacaa5ec3b9b88" category="paragraph"><block ref="b80b3f02255d5bb643bacaa5ec3b9b88" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="ffc5a4c8a65021a0092a0cc880066de3" category="paragraph">若為任何使用者提出的要求、SnapCenter 則「支援服務」UI會與Cloud Manager SaaS進行通訊、驗證要求後、該SaaS會將通話轉接至Cloud Manager Connector。連接器接著會與SnapCenter IsoreService通訊、SnapCenter 而IsoreService會叫用Azure NetApp Files Isormanagement API和HANA系統命令來執行資料保護作業。</block>
+  <block id="cc5d9a3e5390dceaaf6d51e30e25ac34" category="paragraph">可在HANA系統的相同vnet或不同的vnet中部署支援。SnapCenter如果SnapCenter 使用不同網路的是「支援服務」和HANA系統、您應該在兩者之間建立網路連線。</block>
+  <block id="e277e42688a9f44945fa8c1919bab726" category="section-title">支援的功能</block>
+  <block id="7fca755928420c21cb693a0ea4c54420" category="paragraph">支援下列功能。SnapCenter</block>
+  <block id="0660503bc6f812546b833599898cf6e1" category="list-text">新增SAP HANA系統</block>
+  <block id="045ef90684cdf66906481582d855554f" category="list-text">備份SAP HANA系統</block>
+  <block id="6614abf565ef618b3fb893bc313b5936" category="list-text">同時支援快照型和檔案型備份</block>
+  <block id="0fd447bf0e43ac440f4e8620830036c9" category="list-text">支援SAP HANA系統的隨需備份</block>
+  <block id="2c923a35a6614e72e23a7f3acaec0d32" category="list-text">使用系統定義的原則或自訂原則、支援SAP HANA系統的排程備份</block>
+  <block id="4daab712a81f483acc692f943dfe93d2" category="paragraph">您可以在原則中指定不同的排程頻率、例如每小時、每日、每週和每月。</block>
+  <block id="5b97833b94f74584fbcc067437967b7f" category="list-text">支援非資料磁碟區和全域非資料磁碟區的備份</block>
+  <block id="6e8413d03b75fe5c129c80ecf66704ec" category="list-text">根據原則保留備份</block>
+  <block id="d425231015105a09e4350149bbaf024c" category="list-text">從使用者指定的備份還原SAP HANA系統</block>
+  <block id="60d9a229099000fec5710894db8b263b" category="list-text">監控備份和其他工作</block>
+  <block id="c8ed27e18f0091672a5371f0280b6317" category="list-text">在HANA系統上管理資料和記錄備份目錄</block>
+  <block id="0ef1d9e4301aa4044b0bf2a6379c6a24" category="list-text">在儀表板上顯示保護摘要、組態詳細資料和工作狀態</block>
+  <block id="2dbc045edb5a2f6faf0c411d7f5f750f" category="list-text">透過電子郵件傳送警示</block>
+  <block id="e646e16bee8b32e6ea29e30d01970a6c" category="section-title">限制</block>
+  <block id="8f2191123e919410a80a597629962d59" category="paragraph">支援下列限制：SnapCenter</block>
+  <block id="e4b3550f0d9c607881ab2370e1a387ad" category="list-text">不支援國際化、您應該使用英文瀏覽器。</block>
+  <block id="e5f8d4769a63109ecb2722c68e03ff0b" category="list-text">只有具備「Account Admin」角色的Cloud Manager使用者才能啟用SnapCenter 此功能。</block>
+  <block id="074f7e44ec062bc40b2a28831094e8b0" category="list-text">Azure Kubernetes Service（KS）叢集節點故障的相關限制</block>
+  <block id="d65bac40c733be290764cfa1afcd0028" category="list-text">如果其中一個節點離線、則在使用者叢集中、執行中工作可能會失敗、但後續工作將會執行。</block>
+  <block id="01f43c13339561a534e9d1c6e9596cbe" category="list-text">在高效能叢集中、如果其中一個節點停機、您就無法新增SAP HANA系統、但其他作業也能順利執行。</block>
+  <block id="84dee3e862191038e6eafc735f16f8bc" category="paragraph">您應該叫出節點來新增HANA系統。</block>
+  <block id="7b1d0a7b2fe33ab114a0bad8a36c2028" category="list-text">排程器不支援高可用度組態。</block>
+  <block id="5e526f6e213483b562087f07e477b924" category="paragraph">如果排程器使用的MySQL節點當機、您應該叫出節點、讓排程的作業繼續進行。</block>
+  <block id="ce21e7ae4271271294ccbf54c8fd6864" category="summary">NetApp以多種方式支援Cloud Manager。我們全年無休提供豐富的免費自助支援選項、例如知識庫（KB）文章和社群論壇。您的支援註冊包括透過網路票證提供遠端技術支援。</block>
+  <block id="fabfc25ef8996fd90836e58a4c0b26b6" category="doc">取得協助</block>
+  <block id="51719eefc68685ac0e2a11057a44b8be" category="paragraph">NetApp以多種方式支援Cloud Manager及其雲端服務。我們全年無休提供豐富的免費自助支援選項、例如知識庫（KB）文章和社群論壇。您的支援註冊包括透過網路票證提供遠端技術支援。</block>
+  <block id="07d41912a6ab6b97216f8cf89e93205c" category="section-title">自我支援</block>
+  <block id="5e4b821a1a82558dead1ef6961e90666" category="paragraph">這些選項可供免費使用、一天24小時、一週7天：</block>
+  <block id="19111351b69b6b15668130b38b7f6038" category="inline-link">知識庫</block>
+  <block id="fd6bb4fa1ad0caeedd6782d92cc54ea3" category="list-text"><block ref="fd6bb4fa1ad0caeedd6782d92cc54ea3" category="inline-link-rx"></block></block>
+  <block id="76b571fb5edea1c1994fa0ff01f7b1e2" category="paragraph">請搜尋Cloud Manager知識庫、找出有助於疑難排解問題的文章。</block>
+  <block id="14526abd8bda5af347775025cd5342cf" category="inline-link">社群</block>
+  <block id="410fdb9caa9c64da2ff3f88f4836960d" category="list-text"><block ref="410fdb9caa9c64da2ff3f88f4836960d" category="inline-link-rx"></block></block>
+  <block id="7f3490343cad8dc3bfdb72dd5d957e8d" category="paragraph">加入Cloud Manager社群、追蹤後續討論或建立新討論。</block>
+  <block id="5b6cf869265c13af8566f192b4ab3d2a" category="list-text">文件</block>
+  <block id="3c313458d6e15dd2c4336e47118d0a8f" category="paragraph">您目前正在檢視的Cloud Manager文件。</block>
+  <block id="80b1b0d2b1ebf2b3cba2d25759801afd" category="list-text">mailto：ng-cloudmanager-feedback@netapp.com [意見反應電子郵件]</block>
+  <block id="bff60abbc46aceed0f73a3a4f6cfb123" category="paragraph">我們非常重視您的意見。提交意見反應、協助我們改善Cloud Manager。</block>
+  <block id="0659d428df833a806e29e65e632d380a" category="section-title">NetApp支援</block>
+  <block id="c91b5a63849b8d2db01014ed33192735" category="paragraph">除了上述的自我支援選項、您也可以與NetApp支援工程師合作、在您啟動支援之後解決任何問題。</block>
+  <block id="f3a29486bed19a90f2da6d007818b427" category="list-title">步驟</block>
+  <block id="6c08c57e382a25a778455184cd9b1a4a" category="list-text">在Cloud Manager中、按一下*「說明」&gt;「支援」*。</block>
+  <block id="f5052c65917d7341726235d4d4941461" category="list-text">在「Technical Support（技術支援）」下選擇可用的選項之一：</block>
+  <block id="bece28b158ab337d9ed24b00d7d02cc7" category="list-text">按一下*致電我們*以尋找NetApp技術支援的電話號碼。</block>
+  <block id="efe81cff8e6f47ec59ef94167b76bf5a" category="list-text">按一下「*開啟問題*」、選取其中一個選項、然後按一下「*傳送*」。</block>
+  <block id="cbb1040836732e478409dacf7e45171a" category="paragraph">NetApp代表將審查您的案例、並盡快回覆您。</block>
+  <block id="80ace30f4a5ad9e66d33455c2949e4aa" category="summary">從該系統的備份之一還原SAP HANA系統。</block>
+  <block id="561178b3be2b611f86295fc5c91ca21c" category="doc">還原SAP HANA系統</block>
+  <block id="608dee0e471fafc62982a8fc2ea89662" category="paragraph">萬一資料遺失、請從該系統的備份之一還原SAP HANA系統。</block>
+  <block id="c808f322e55451003355f85842325011" category="paragraph">僅支援儲存還原。因為不支援還原HANA系統、所以您應該先使用SAP HANA Studio或SAP HANA Cockpit將HANA系統置於還原模式。</block>
+  <block id="95415a5ebf2eecc6c77c0e77e8a9034c" category="list-text">在「支援服務」頁面上、按一下SnapCenter 「* SAP HANA Systems*」。</block>
+  <block id="4a5394ba89b62cf1d84de8e76e5e7cd8" category="paragraph">畫面會顯示加入SnapCenter 到「畫面服務」的系統。</block>
+  <block id="fa1c9e28106b05f396bc61c0675e095e" category="inline-image-macro">可檢視詳細資料的圖示快照</block>
+  <block id="4900f377e39a7c49e2c9d2818a37d859" category="list-text">按一下 <block ref="7c7910c2beb8437dc7aa4b8b65a637e8" category="inline-image-macro-rx" type="image"></block> 與您要還原的系統相對應。</block>
+  <block id="27be1f7730b5fc62f196facd94dde688" category="list-text">按一下「*檢視備份*」。</block>
+  <block id="301dd0e62597cfc47611b83ff0e5f2c3" category="list-text">在備份區段中、按一下 <block ref="7c7910c2beb8437dc7aa4b8b65a637e8" category="inline-image-macro-rx" type="image"></block> 與您要用來還原系統的備份相對應。</block>
+  <block id="357a35aedd0c37deb3a881df778a9bb4" category="list-text">按一下 * 還原 * 。</block>
+  <block id="74e99ef8198508661ded8d78a5dd22bf" category="list-text">檢閱訊息並選擇*是、還原*進行確認。</block>
+  <block id="1ad18e39be8da049d574e51c3c28ee58" category="admonition">還原資料庫之後、如果您使用HANA Studio對SAP HANA系統進行時間點還原、SnapCenter 則可能會還原根據保留設定由還原服務刪除的資料備份目錄項目。如果刪除的資料備份目錄項目因為恢復作業而還原、SnapCenter 則無法偵測並刪除這些項目。這可能導致SnapCenter 無法正確清理記錄目錄。您可以驗證SnapCenter 支援服務中的備份項目、找出哪些資料備份目錄項目是新還原的項目、然後手動刪除這些項目。</block>
+  <block id="6abf73ac39531a37ff136074cc08335d" category="inline-link">SAP HANA利用Azure NetApp Files NetApp服務在支援功能的基礎上進行備份與還原SnapCenter</block>
+  <block id="d7a3a07aa1b750438944f9e672f6e685" category="paragraph">*瞭解更多資訊*<block ref="4468fd6633b3fc9360ea8b2fb69a6be4" category="inline-link-rx"></block></block>
+  <block id="2bb2f60cb418e92215192866e9fedcff" category="summary">新增SAP HANA系統、然後新增非資料磁碟區。</block>
+  <block id="a26976a86fc4f35537d8f64e1ac8a5b6" category="doc">新增SAP HANA系統</block>
+  <block id="7c22501b82dfeecd40dc0b62dfa0aef9" category="paragraph">手動新增SAP HANA系統。不支援自動探索SAP HANA系統。</block>
+  <block id="be900e29b5381e7afc1dc74e63115cd1" category="paragraph">新增SAP HANA系統時、您應該新增HDB使用者儲存金鑰。HDB安全使用者存放區金鑰可用來將SAP HANA系統的連線資訊安全地儲存在用戶端上、而HDBSQL用戶端則使用安全的使用者存放區金鑰來連線至SAP HANA系統。</block>
+  <block id="7a8cd5931d731495a46bf35a669a721e" category="admonition">如果使用SAP HANA叢集中的節點當機、您就無法新增或修改SAP HANA系統。</block>
+  <block id="30b230132fd8b59f0b0d539db2200fe1" category="list-text">在「支援服務」頁面上、按一下SnapCenter 「* SAP HANA Systems*&gt;* Add*」。</block>
+  <block id="0c1a5b67011e14bb43bb9feaf10893f7" category="list-text">在「系統詳細資料」頁面上、執行下列動作：</block>
+  <block id="0bb9528c6280f9acf1fac9a5b6232c63" category="list-text">選取系統類型。</block>
+  <block id="a3df030ad26d42c5af0fcbd0e6f513d7" category="list-text">指定SAP HANA系統的SID。</block>
+  <block id="e5eb632216332c0ee2d0860b38c00bfc" category="list-text">指定SAP HANA系統名稱。</block>
+  <block id="01496b35ac5dfc42639b14392d213cef" category="list-text">按一下HDB Secure User Store Keys（HDB安全使用者儲存金鑰）文字方塊以新增使用者儲存金鑰詳細資料</block>
+  <block id="5a64b90f778830156d86bb5352fc9022" category="paragraph">指定金鑰名稱、系統詳細資料、使用者名稱和密碼。</block>
+  <block id="7dee7e783d13b6d5d415926ce0bfc306" category="list-text">按一下「 * 新增 * 」。</block>
+  <block id="f17079b947620ba46dc3350f27443987" category="admonition">如果您要新增多主機SAP HANA系統、則應該為每個主機新增使用者儲存金鑰。</block>
+  <block id="26983a904e0717c520032a2178795368" category="list-text">按一下 * 繼續 * 。</block>
+  <block id="0a0f2401d7cfb7ad9085a1992acc4745" category="list-text">在Storage Footprint頁面上、執行下列步驟：</block>
+  <block id="0b4d4df45dec0f187977abf3a0e77fca" category="list-text">選取工作環境並指定NetApp帳戶。</block>
+  <block id="d253da62a1a7bf3e4d5c1adf904b607a" category="list-text">選取所需的磁碟區。</block>
+  <block id="160c15dad3c86fc7f11c9d0f725a510f" category="list-text">按一下「*新增儲存設備*」。</block>
+  <block id="509926bc20361b8afcccdbb1d20c1d2f" category="list-text">檢閱所有詳細資料、然後按一下*「Add*（新增*）」。</block>
+  <block id="d3bbdbc84ea2f8d0fbf35fec60ac4a8c" category="paragraph">您也可以編輯或移除SnapCenter 已新增至「支援服務」的SAP HANA系統。當您移除SAP HANA系統時、所有相關的備份和目錄項目都會刪除、不再受到保護。</block>
+  <block id="9ffc12f37359a324a9ddadcf88da6e4c" category="section-title">新增非資料磁碟區</block>
+  <block id="327c3559bf13c35dec756b6a1d17e74c" category="paragraph">新增多租戶資料庫容器或單一容器類型的SAP HANA系統之後、即可新增HANA系統的非資料磁碟區。</block>
+  <block id="d11788d6414bbc5e3aa7623d3003a34b" category="list-text">在「支援服務」頁面上、按一下SnapCenter SAP HANA Systems。</block>
+  <block id="8d6b0136f845c5e96113a3d6ca02e514" category="paragraph">畫面會顯示所有新增至SnapCenter 該服務的系統。</block>
+  <block id="fd1b0828ea2644dbfd963d23f92aabf2" category="list-text">按一下 <block ref="7c7910c2beb8437dc7aa4b8b65a637e8" category="inline-image-macro-rx" type="image"></block> 對應到您要新增非資料磁碟區的多租戶資料庫容器或單一容器類型系統。</block>
+  <block id="97d0711d27380b8c7e7ec4d7558bb2e2" category="list-text">按一下「*新增非資料磁碟區*」。</block>
+  <block id="7dec48d8e3922bc99874eb37414ce188" category="list-text">按一下「*新增儲存設備*」。</block>
+  <block id="30d965eef5ba25c6b9998ae38270b43e" category="doc">法律聲明</block>
+  <block id="e9c44bbfd795a5d63d74c6a77afee70d" category="paragraph">法律聲明提供版權聲明、商標、專利等存取權限。</block>
+  <block id="6016a2b341113bf496b719905398ecd2" category="section-title">版權</block>
+  <block id="09e95b77ffe81fe465a83ba99efad5c8" category="paragraph"><block ref="09e95b77ffe81fe465a83ba99efad5c8" category="inline-link-rx"></block></block>
+  <block id="126a02652da6de02962cf1b654fd6376" category="section-title">商標</block>
+  <block id="c4ce4761e466527d26b3e3d5ed1006fd" category="paragraph">NetApp 、 NetApp 標誌及 NetApp 商標頁面上列出的標章均為 NetApp 、 Inc. 的商標。其他公司與產品名稱可能為其各自所有者的商標。</block>
+  <block id="7aa531e9acfe2b98e34d2c92fe9846ff" category="paragraph"><block ref="7aa531e9acfe2b98e34d2c92fe9846ff" category="inline-link-rx"></block></block>
+  <block id="be89498d2f8a22ce47c02ba9795fe2af" category="section-title">專利</block>
+  <block id="d0b19d36be2c5f16e9aef46c8a452d3d" category="paragraph">如需最新的 NetApp 擁有專利清單、請參閱：</block>
+  <block id="d7f1fbcf9ce4e42f705add574d262b2c" category="paragraph"><block ref="d7f1fbcf9ce4e42f705add574d262b2c" category="inline-link-rx"></block></block>
+  <block id="56c34c6410dd45c5cec44149ad0ce037" category="section-title">隱私權政策</block>
+  <block id="fc248f74f5e36542f7f5627b8610e9a3" category="paragraph"><block ref="fc248f74f5e36542f7f5627b8610e9a3" category="inline-link-rx"></block></block>
+  <block id="c0227cef6f07a8cd2ac72f2945b031aa" category="section-title">開放原始碼</block>
+  <block id="9b73989307c1975dfa4d5e1581e4afe8" category="paragraph">通知檔案提供有關 NetApp 軟體所使用之協力廠商版權與授權的資訊。</block>
+  <block id="4940124e8487cb4ea36f1511a195cf66" category="inline-link-macro">Cloud Manager 3.9 注意事項</block>
+  <block id="c069fcc68c5dfa73ccc99924c836cae9" category="list-text"><block ref="c069fcc68c5dfa73ccc99924c836cae9" category="inline-link-macro-rx"></block></block>
+  <block id="e7481530c4cf2aa274134d89c42b9e40" category="summary">深入瞭SnapCenter 解《服務》的新功能。</block>
+  <block id="6af4ad198ad0d68e7e5efb1b62491163" category="doc">更新功能SnapCenter</block>
+  <block id="5e057a1bffc9bad13fd5567d9b86dd0b" category="section-title">2021年12月21日</block>
+  <block id="b59fdb8f9fe5a28d08cd50bf85b70880" category="section-title">Apache log4j弱點的修正程式</block>
+  <block id="6b6f87c741f6734b4908d03d2c21e449" category="paragraph">感謝支援服務1.0.1將Apache log4j從2.9.1版升級至2.17版、以解決下列弱點：-2021至44228、-2021至4104及-2021至45105。SnapCenter</block>
+  <block id="ae1f9a5afbc7e02967d7f7e643135d82" category="paragraph">支援此功能的叢集應自動更新至最新版本。SnapCenter您應該確定SnapCenter 「支援服務」UI中的版本顯示叢集為1.0.1.1251或更新版本。</block>
+  <block id="8dc0422412ec550e4062c55e01a38bdf" category="section-title">2021年10月13日</block>
+  <block id="c83ebe5a7133a377b69bf636c6a38972" category="section-title">支援SnapCenter S檢修1.0.0</block>
+  <block id="49d75fd1ab909bc01be79453066d9eed" category="list-text">支援NetApp®雲端儲存設備上執行的應用程式、可利用此服務提供資料保護功能。SnapCenterNetApp Cloud Manager內啟用的支援功能可為駐留在原地（anf）的SAP HANA®系統、提供高效率、應用程式一致且原則型的備份與還原功能。SnapCenter Azure NetApp Files</block>
+  <block id="135197b35874749c250f6afa57f0ff27" category="paragraph"><block ref="135197b35874749c250f6afa57f0ff27" category="inline-link-macro-rx"></block></block>
+  <block id="0e5d1d663ddc19adea8b1572c120bb29" category="list-text">您應該建立連接器、啟用SnapCenter 「還原服務」、新增SAP HANA系統、然後執行備份與還原作業。</block>
+  <block id="967b14dc476ed2e31482e14323c48c17" category="paragraph"><block ref="967b14dc476ed2e31482e14323c48c17" category="inline-link-macro-rx"></block></block>
+  <block id="fab4191c3282be9232a1f75270ad2e77" category="summary">在建立連接器並啟用SnapCenter 「支援服務」之前、請務必符合先決條件。</block>
+  <block id="0d2207ddfa0465f7fdc075a16c7103c2" category="doc">建立連接器及啟用SnapCenter 「支援服務」的先決條件</block>
+  <block id="c0765d49289193632cbeb8f73e33c513" category="paragraph">在Azure中建立連接器並啟用SnapCenter 「功能性支援」之前、您應該先確定某些事項。</block>
+  <block id="d895b712b3b71cc40eb2a7d81a7d98c1" category="list-text">請確定為連接器選擇的子網路不應與下列為Azure Kubernetes Service（AKS）保留的IP位址範圍重疊：169.254.0/16、172.30.0/16、172.31.0.0/16和192.0/24。</block>
+  <block id="649ede51d8c8c14a5e4e777f24caada1" category="list-text">確保所選子網路中沒有執行的問題。</block>
+  <block id="078e3debfd8d4cacff33f8a37fbedd67" category="list-text">確保所選的子網路可存取各連接埠上的SAP HANA系統。</block>
+  <block id="cd8147d7e135b3f48f9894be4ece54ae" category="list-text">如果所選子網路的vnet與SAP HANA系統的vnet不同、請確認VNets可以透過VPN閘道、對等或其他方式彼此通訊。</block>
+  <block id="de852f7cca61372fa7c7ccbc0dd82e43" category="list-text">如果您想要在SnapCenter 防火牆後啟用「支援服務」、請執行中所述的動作 <block ref="68fbd50b94d97a9277102194b88f11ae" category="inline-xref-macro-rx"></block>。</block>
+  <block id="6d9f088dc89f4a4aeadbeef6d90ff1b1" category="paragraph">您應該事先決定是否要在SnapCenter 防火牆後啟用「支援服務」。啟用SnapCenter 「支援服務」之後、您無法將其設定為在防火牆後執行。這是一個高峰限制。</block>
+  <block id="bdd8837c5f5666c1f37ec05326aa385f" category="section-title">網路需求</block>
+  <block id="1779c5257c3a2a3721afa88583df89ff" category="paragraph">設定您的網路、以便Connector管理雲端環境中的資源和程序。</block>
+  <block id="7b5ab8d4f5391ce5b1dfdc1f7332745e" category="section-title">防火牆組態</block>
+  <block id="81a2acf3e6167e34cd699935444b3487" category="paragraph">如果您想要在SnapCenter 防火牆後啟用「支援服務」、請執行下列動作。</block>
+  <block id="ac7071f5d59a4b63a6324710c31a3144" category="admonition">如果您使用Azure防火牆、可以使用指令碼執行這些步驟。如需相關資訊、請參閱 <block ref="0e344aded8c812d6b4469cf9fa62d95a" category="inline-xref-macro-rx"></block>。</block>
+  <block id="a8d6982cd3fbdb6cb9296d46f8f664ce" category="list-text">將下列網路規則新增至防火牆。</block>
+  <block id="4abc505ff15216e855719ff1190f9129" category="cell">目的地端點</block>
+  <block id="888a77f5ac0748b6c8001822417df8b6" category="cell">傳輸協定</block>
+  <block id="60aaf44d4b562252c04db7f98497e9aa" category="cell">連接埠</block>
+  <block id="8413c683b4b27cc3f4dbd4c90329d8ba" category="cell">註解</block>
+  <block id="95ff646a131318136e3b364356af9071" category="inline-link">服務標籤</block>
+  <block id="c3ad2360b3772057a330b592a5f89b9c" category="cell"><block ref="e36984cf9325fa701aa22032e29b2193" category="inline-link-rx"></block> - AzureCloud。&lt;地區&gt;:1194</block>
+  <block id="f5ef036b4d8b630721e51fe23489fbc9" category="cell">UDP</block>
+  <block id="a42a596fc71e17828440030074d15e74" category="cell">1194</block>
+  <block id="70cd7986bd7c7fbebca64d1871f45d2f" category="cell">如果您打算擁有私有連接器和私有SnapCenter 的支援服務叢集、則不需要。</block>
+  <block id="e7c8d06cef56d0e49ba567fc4afa499b" category="cell"><block ref="e36984cf9325fa701aa22032e29b2193" category="inline-link-rx"></block> - AzureCloud。&lt;地區&gt;：9000</block>
+  <block id="b136ef5f6a01d816991fe3cf7a6ac763" category="cell">TCP</block>
+  <block id="d5ab8dc7ef67ca92e41d730982c5c602" category="cell">9000</block>
+  <block id="b6d149452b9fd5e37b58297f7cf3ce17" category="cell">FQDN：ntp.ubuntu.com:123</block>
+  <block id="202cb962ac59075b964b07152d234b70" category="cell">123.</block>
+  <block id="3cc884a2a2698451ca4ddec60e214a3b" category="cell">Azure虛擬機器的時間同步化所需。</block>
+  <block id="78653adbcf922303403b93e578386121" category="cell"><block ref="e36984cf9325fa701aa22032e29b2193" category="inline-link-rx"></block> - AzureCloud。&lt;地區&gt;:443</block>
+  <block id="13f3cf8c531952d72e5847c4183e6910" category="cell">443..</block>
+  <block id="0f4c193c7c60bd9a00e57e716b84745e" category="list-text">在防火牆中新增應用程式規則、並附上下列FQDN標記和連接埠詳細資料：</block>
+  <block id="39a9cf78a3899a808563a113f59510c4" category="list-text">FQDN標記- AzureKubernetesService</block>
+  <block id="4e0aa98bae821751635910f38f127bbf" category="list-text">HTTPS：443</block>
+  <block id="90214e3af3d565e5e576209ccd3b568d" category="list-text">新增以下端點作為目標FQDN的應用程式規則、其傳輸協定和連接埠為HTTPS：443。</block>
+  <block id="b8724da75fb917e992576b17378e66b3" category="cell">端點</block>
+  <block id="261addf78c7b2c961032b3dd08ba0b1f" category="cell">目的</block>
+  <block id="cc328ccddf672987f092ca6f44c9f9cf" category="cell">\https://management.azure.com \https://login.microsoftonline.com</block>
+  <block id="8418435eb29b0823b3e64b30b81cb9d4" category="cell">讓 Cloud Manager 能夠在 Cloud Volumes ONTAP 大多數 Azure 地區部署及管理功能。</block>
+  <block id="7e42575d1287c35b22447424ad76b6c6" category="cell">\https://management.microsoftazure.de \https://login.microsoftonline.de</block>
+  <block id="c48bf3751390506e38bd903eec2dc0c9" category="cell">讓 Cloud Manager 能夠在 Cloud Volumes ONTAP Azure Germany 地區部署及管理功能。</block>
+  <block id="67b376950210ebd8b7c9b01244118cb1" category="cell">\https://management.usgovcloudapi.net \https://login.microsoftonline.com</block>
+  <block id="395c2906b95b841baa6af2c3023e37d6" category="cell">讓 Cloud Manager 能夠在 Cloud Volumes ONTAP Azure US Gov 地區部署及管理功能。</block>
+  <block id="beb16e53b548a5269e5af9de9c6d391d" category="cell">\https://api.services.cloud.netpp.com</block>
+  <block id="24ba84c7d78074d10c6d1b8143028abf" category="cell">允許API要求至NetApp Cloud Central。</block>
+  <block id="cc363419596ef971d1cfc93096f69ebe" category="cell">\https://cloud.support.netapp.com.s3.us-west-1.amazonaws.com</block>
+  <block id="0f7fc0e257736da2b0e583e49778bf2f" category="cell">提供軟體映像、資訊清單和範本的存取權限。</block>
+  <block id="d4c81973318a62a51b25ed291b04a0fa" category="cell">\https://cognito-idp.us-east-1.amazonaws.com \https://cognito-identity.us-east-1.amazonaws.com \https://sts.amazonaws.com \https://cloud-support-netapp-com-accelerated.s3.amazonaws.com</block>
+  <block id="49f115dd35a8be23d6f483e5ab7c8c1d" category="cell">讓 Connector 能夠存取及下載資訊清單、範本及 Cloud Volumes ONTAP 升級影像。</block>
+  <block id="9dcb0a1d3281e001a6085626a264be49" category="cell">\https://cloudmanagerinfraprod.azurecr.io</block>
+  <block id="1b9f42efcf7ffef4d1daf55f12ea8909" category="cell">存取執行 Docker 之基礎架構的容器元件軟體映像、並提供與 Cloud Manager 整合服務的解決方案。</block>
+  <block id="c46b9566ce96156ab310817351ef2854" category="cell">\https://kinesis.us-east-1.amazonaws.com</block>
+  <block id="3414f3bd5331c7e91fdcac0502875dcb" category="cell">讓 NetApp 能夠從稽核記錄串流資料。</block>
+  <block id="115781a0043a85f8707c5c99fd02dc75" category="cell">\https://cloudmanager.cloud.netapp.com</block>
+  <block id="e26cb925e48bab5bb2ee58ee723b2677" category="cell">與Cloud Manager服務（包括NetApp帳戶）進行通訊。</block>
+  <block id="300f031c227ed1b4448a8bb51abec2bb" category="cell">\https://netapp-cloud-account.auth0.com</block>
+  <block id="cd9bbb2df00a50fb31caf47496bd1afe" category="cell">與 NetApp Cloud Central 通訊、以進行集中式使用者驗證。</block>
+  <block id="8963387394e2ee3e2a5a9ba160566a58" category="cell">\https://support.netapp.com</block>
+  <block id="09e16c84de2d84cfe996c648810bb86e" category="cell">與 NetApp AutoSupport 通訊</block>
+  <block id="c384191d9c0ac29b941a0cb1ecefdb33" category="cell">\https://cloud-support-netapp-com.s3.us-west-1.amazonaws.com</block>
+  <block id="07c166aca47c65ea90c6b4920d6f5238" category="cell">與 NetApp 溝通以取得系統授權與支援登錄。</block>
+  <block id="d55a44e3e50c967211a7ba30769f882b" category="cell">\https://client.infra.support.netapp.com.s3.us-west-1.amazonaws.com \https://cloud-support-netapp-com-accelerated.s3.us-west-1.amazonaws.com</block>
+  <block id="4bbfae92a0503a50c87d2a06b2b50f3b" category="cell">讓 NetApp 能夠收集疑難排解支援問題所需的資訊。</block>
+  <block id="38fe983310530d407e19ffc2b53a62d4" category="cell">* .blob.core.windows.net</block>
+  <block id="5b3f477437c1f9552e24f326a02b0e37" category="cell">使用 Proxy 時 HA 配對必須具備此功能。</block>
+  <block id="fdb51f8a262ef532926feb44b010cb72" category="cell">\https://auth0.com</block>
+  <block id="a92552df98cc7c22cdbfdace71746996" category="cell">驗證驗證所需的項目。</block>
+  <block id="106221c74a466779b3e9349294fafb42" category="cell">\https://registry-1.docker.io \https://auth.docker.io \https://production.cloudflare.docker.com</block>
+  <block id="ba93b2cf835f60c15659402045cad64b" category="cell">擷取SnapCenter 相依於「支援服務」工作流程引擎的項目。</block>
+  <block id="d442568bc1c240386ded0f1d8a2f0fe6" category="cell">\https://exteranl-log.cloudmanager.netapp.com</block>
+  <block id="d5b93712c46b220e3c2ec2d23b1feef5" category="cell">允許通訊將記錄傳輸至Cloud Manager記錄儲存庫。</block>
+  <block id="bc6992e070d9e1340211ed3471c0b114" category="list-text">選擇您要安裝SnapCenter 的子網路。</block>
+  <block id="e8dbaa0ff37377c7340b96045fd91935" category="list-text">使用路由建立路由表：</block>
+  <block id="d0291b23b73320fe3ebf3534ec7af3ea" category="list-text">將流量從子網路轉送到防火牆內部IP位址</block>
+  <block id="9e4cfd7ef75c01c5ac965cb1ba1bac37" category="list-text">將流量從防火牆的公用IP位址轉送到網際網路。</block>
+  <block id="4bef0203103722e65f656f8c35646b87" category="list-text">將路由表附加至子網路。</block>
+  <block id="7ebcb503cdda50b6cfafe4b188689a5c" category="inline-link">連接器的網路需求</block>
+  <block id="28ff81b2cd1748c02cde008142adaea5" category="paragraph">如需Cloud Manager Connector網路需求的相關資訊、請參閱<block ref="9763993d474344db60870121fd65ea87" category="inline-link-rx"></block>。</block>
+  <block id="ca3fae953ace3814f44551f58d2984bf" category="section-title">Azure防火牆組態</block>
+  <block id="bd114f893a39a34dfb70d101f6cc8d27" category="paragraph">如果您想要在SnapCenter Azure防火牆後啟用「支援服務」、請執行下列動作。</block>
+  <block id="3f542b45e89ad1bf8724f107638c51b8" category="list-text">您應該已經建立防火牆（傳統模式）。</block>
+  <block id="68507bbad35dc0ac17872d2839fd06b8" category="list-text">您應該已經建立Vnet和子網路以供SnapCenter 使用。</block>
+  <block id="f8f9291d183aee85540a5ac1861dfbd3" category="list-text">如果您的防火牆資源和vnet SnapCenter of the不同時租戶、您應該登入Azure Shell中的兩個租戶。</block>
+  <block id="54c016a1d891dc30439989dbae8027e8" category="list-text">如果您的防火牆vnet和SnapCenter 物件不一樣、您應該在VNets之間建立對等關係。</block>
+  <block id="8b5181a0b2fc5bd5523b1cbbe0f65c94" category="inline-link-macro">scs_azure_firewall_config.sh</block>
+  <block id="f593996d6386a4a5d25414318ff9b2e7" category="list-text">下載 <block ref="984e53de2fde74764f8c34aa53659aa0" category="inline-link-macro-rx"></block> 指令碼至您的本機系統。</block>
+  <block id="d082ae86359d86afc2e67be3c976c1e7" category="paragraph">"chmod+x ./sSC_azure_firewall_config.sh"</block>
+  <block id="5e944bef96e94a4fd284f8ff552cc980" category="paragraph">/scs_azure_firewall_config.sh -fwsubid &lt;Firewall_SubscriptionID&gt;-fwname &lt;Firewall_name&gt;-fwrg &lt;Firewall_Resource_Group&gt;-scssubid &lt;SnapCenter_Service_SubscriptionID&gt;-scsvnet &lt;SnapCenter_Service_net_name&gt;-Snapscra_Resource &lt;Snapscr_Center_Service_net_name&gt;</block>
+  <block id="3e1cdf06b6e1c94898b39731fb1984b5" category="admonition">如果您尚未建立資源群組、指令碼會建立資源群組。建立Connector時、您可以使用相同的資源群組、讓SnapCenter 所有的相關資源都位於相同的資源群組中。</block>
+  <block id="4cd50d43661e755192f1183cf08fffe6" category="list-text">已設定防火牆規則。</block>
+  <block id="b9940dcbb39cb931ec7e01152c216680" category="list-text">系統會建立資源群組以供SnapCenter 支援服務使用。</block>
+  <block id="0cd7f89167541f4dfc3d0ddc5aba7779" category="list-text">路由表會在SnapCenter 「支援服務」資源群組中建立。</block>
+  <block id="bb7c2e8549d0731d851ea33dad892efe" category="list-text">已設定路由表規則。</block>
+  <block id="64cd8b6042d8110e333061975441af1e" category="list-text">路由表會附加至子網路。</block>
+  <block id="ad84535a3df654cda0c08fa019d4e5b5" category="section-title">連線至HANA系統</block>
+  <block id="f50bd4bb3a52b1fc096a38c3ee11de9b" category="paragraph">支援服務叢集需要使用HDBSQL命令、與使用者網路中的HANA系統進行通訊。SnapCenter需要使用各種網路架構來允許使用叢集與HANA系統之間的通訊通道SnapCenter 、例如：</block>
+  <block id="c1bb0462c69cfcd7397951f427c95a0c" category="list-text">連接器和SnapCenter S檢修 叢集部署在HANA系統的相同vnet上</block>
+  <block id="e89972518428349c83cbd19f8fea6017" category="list-text">連接器和SnapCenter 物件服務叢集部署在不同於HANA系統的Vnet中、並使用2個VNets之間的vnet對等機制來建立通訊。</block>
+  <block id="19d30c7edc0463303ff849578ac54ad2" category="list-text">連接器和SnapCenter 物件服務叢集部署在不同於HANA系統的Vnet中、並使用兩個VNets之間的VPN閘道來建立通訊。</block>
+  <block id="871d60d74909245287d5217802e93005" category="section-title">安全性群組組態</block>
+  <block id="8596f5c99acc7cd90c6132e01869d0d2" category="paragraph">如果在HANA系統中設定了網路安全群組（NSG）、則應允許傳入通訊、從SnapCenter 支援服務的連接埠、到使用者存放區金鑰中指定的HANA系統連接埠。</block>
+  <block id="199db3d2ec990b3799a83fae55da6046" category="list-text">傳輸協定：All TCP</block>
+  <block id="d7979f0c56ae2dc86ff6934cdfa42493" category="list-text">子網路：SnapCenter 叢集子網路的功能</block>
+  <block id="5ae4d7e7a456c0cbd29ccef96456bdcf" category="list-text">目的：執行HDBSQL命令</block>
+  <block id="ae76e5bba1a2e4e7d2545d2770f0f970" category="paragraph">執行於支援SSL的HANA系統SnapCenter 、可在支援SSL的情況下、與執行此功能的HANA叢集進行SSL通訊。</block>
+  <block id="1243d1128e634c4bb1a584f8521df2e5" category="summary">安裝HDBSQL用戶端、在SAP HANA資料庫上執行資料保護作業。</block>
+  <block id="3fd009a3fde81c4cf384e53c8112c76a" category="doc">安裝HDBSQL用戶端</block>
+  <block id="c912ea451a4f7fae49880a936d0e04a2" category="paragraph">啟用SnapCenter 完「支援服務」之後、請安裝HDBSQL用戶端、以便在SAP HANA資料庫上執行資料保護作業。HDBSQL用戶端用於與SAP HANA系統通訊。</block>
+  <block id="8b39314c97d2f82f1d8eb38fe721b81a" category="list-text">從SAP帳戶下載HDB用戶端軟體。</block>
+  <block id="81394bfe9c46f32774e28ff127891d18" category="paragraph">這是副檔名為（.SAR）的歸檔檔案。範例：IMDB_CLIENT20_008_20-80002082.SAR</block>
+  <block id="93ab1484a59bf23c163c8dddd970ba6e" category="admonition">HDB用戶端軟體版本應為2.4.202.1590784230或更新版本。</block>
+  <block id="e6683e04e5e2aad2e90c7bc53272f49f" category="list-text">從SAP帳戶下載最新的SAPCAR公用程式。範例：_SAPCAR_1010-70006178.Ex_</block>
+  <block id="8df2d34372b9a1c556ba71348174747e" category="list-text">在Cloud Manager UI上、按一下* Connector*以取得連接器名稱。</block>
+  <block id="db0b228d043019f838d3a4da414ce028" category="list-text">按一下*虛擬機器*。</block>
+  <block id="9266f2039cab63a3e9e09dc197f4b563" category="list-text">搜尋Cloud Manager Connector、然後複製指派給Connector的公有IP位址。</block>
+  <block id="02a2c63e3fc5b79c3e6634b5b7b7e269" category="paragraph">如果連接器未啟用公用IP、您應該使用跨接主機。</block>
+  <block id="eafc1ddb7c110bad3e4f3362564aa25d" category="list-text">將SAPCAR公用程式和HDB用戶端歸檔（.SAR）檔案複製到Connector機器。</block>
+  <block id="2235c621ae42fb07166e8fc3847cc4e5" category="paragraph">若要將檔案複製到Connector路徑、您需要認證資料或建立Connector時提供的金鑰。</block>
+  <block id="d996ec26363b1c8529f317272111a169" category="list-text">「CP &lt;SAPCAR_service&gt;&lt;usersername&gt;@&lt;ip_address&gt;:/home/&lt;username&gt;'</block>
+  <block id="beca022a26d66582997fb108a701e646" category="list-text">「CP &lt;HDB_Client_archive &gt;&lt;username&gt;@&lt;ip_address&gt;:/home/&lt;username&gt;'</block>
+  <block id="6db493c1456d5dacc2d5c05c2783e95a" category="paragraph">檔案會複製到_/home/&lt;使用者名稱&gt;_。</block>
+  <block id="133589c5406596afe58275e8d3d4e67f" category="list-text">使用ssh認證或金鑰登入Connector VM。</block>
+  <block id="d56b90046c96d04e73e85480c2bdab13" category="list-text">在Connector VM中執行下列命令、以在下列系統中安裝HDBSQL用戶端。</block>
+  <block id="d913a0a7b3e1fc0c765f177302ef5a07" category="list-text">「Udo CP /home/&lt;使用者名稱&gt;/&lt;SAPCAR_UTIT&gt;/var/lib/dred/voles/cloudmanager_snapcenter_volVolume /資料/」</block>
+  <block id="0d30c65867919132ae67822e84714c5f" category="list-text">「Udo CP /home/&lt;使用者名稱&gt;/&lt; HDB_Client_archive&gt;/var/lib/ded泊 塢/磁碟區/cloudmanager_snapcenter_volume /_data/」</block>
+  <block id="04e086354d30916cb5a4b4f83508bee3" category="list-text">「Udo Docker執行- IT cloudmanager_snapcenter /bin/bash /opt/netapp/hdbclient/hdbclient.sh - archivefile &lt;HDB_Client_archive&gt;- archiveutil&lt;SAPCar_utile&gt;」</block>
+  <block id="fad3dbbe9841f42de249b688f1d47a80" category="paragraph">*瞭解更多資訊*</block>
+  <block id="876fbabe47f1976d5bf65b83530a5cfd" category="inline-link">如何使用scp移動檔案</block>
+  <block id="f0cdebd98ab24ec2a0c9fa5f621da1c7" category="paragraph"><block ref="f0cdebd98ab24ec2a0c9fa5f621da1c7" category="inline-link-rx"></block></block>
+  <block id="c4d2b59fc4d61d92b985424cf44a39cb" category="summary">在Azure中建立連接器SnapCenter 以利服務。</block>
+  <block id="a266f6237722f9b5a4130ef692c55210" category="doc">在Azure中建立連接器SnapCenter 以利服務</block>
+  <block id="fc41b305b8f564b87007b7d9f6ccc823" category="paragraph">客戶管理員應先部署Connector、然後才能使用Cloud Manager功能。Connector 可讓 Cloud Manager 管理公有雲環境中的資源與程序。</block>
+  <block id="65803824e330be5dda78189602241b9d" category="inline-link">從Azure Marketplace建立連接器</block>
+  <block id="53fd35d28f88eb2d16a149c2fed20b4f" category="paragraph">根據預設、您可以從Azure Marketplace在Azure中建立連接器。執行的步驟<block ref="9987bed28361fa01ec65314df943d692" category="inline-link-rx"></block>請記住下列事項：</block>
+  <block id="e77ff8b764d001fc5632f5914fa1efbb" category="list-text">只要Cloud Volumes ONTAP 指定Cloud Manager for Sfor Sfor、SnapCenter 就能運用相同的功能來執行支援服務。</block>
+  <block id="3407e20e2dda7ef741cae11aedbebc06" category="list-text">針對Cloud Manager名稱、請指定您的Connector VM名稱、以利識別。這會在Cloud Manager UI中顯示為連接器名稱。</block>
+  <block id="4a89c5f604f86d04b1924294cbcb21d4" category="list-text">如果您已設定連接器而沒有公用IP或設定防火牆、則應該有跳接主機來連線至連接器機器。</block>
+  <block id="9fc74892eea31c0ba8eb5335df0eccec" category="inline-link">使用者同意</block>
+  <block id="42b868e2104121f766618462fe94607c" category="paragraph">如果您有<block ref="76b48a38c537fcda47ae8e3a8eb5b6b6" category="inline-link-rx"></block> 您可以在Azure Active Directory中啟用、或是如果租戶管理員可以提供同意、您可以從Cloud Manager UI建立Connector。</block>
+  <block id="4784e3f9b0f7b16fd2b7e96dba490438" category="section-title">已啟用使用者同意</block>
+  <block id="036a55993c4eaf06878d19dff8ddb328" category="inline-link">從Cloud Manager建立Connector</block>
+  <block id="555b5f226be2326ab7ef157d8f065aab" category="paragraph">如果您的Azure Active Directory已啟用使用者同意、<block ref="fb188e196c0db6b01aaed194f9503287" category="inline-link-rx"></block>。</block>
+  <block id="6ef901b02394aca9745109e7a2528dd0" category="section-title">使用者同意已停用</block>
+  <block id="0da4a1a8618ceded22f25810a530ebc1" category="inline-link">要求管理員同意</block>
+  <block id="e4ee08261df520a9645e6a5a23eaf1a8" category="list-text">如果系統管理員同意工作流程已設定在您的Active Directory中、您應該<block ref="6d8cf01151ef5a360f3c449b4a270ed1" category="inline-link-rx"></block>。</block>
+  <block id="04910f034d753a027f328a34866898e3" category="list-text">如果未設定管理員同意工作流程、您應該：</block>
+  <block id="00711dadf5df9c8a678ecdbebd530ddd" category="inline-link">建構URL以授予全租戶管理員同意</block>
+  <block id="ba7c359b6d2c7bae9eb803cbb076d88d" category="list-text"><block ref="d6f17a03bce9849191c532c791897328" category="inline-link-rx"></block>。</block>
+  <block id="ef2fd685db59f852e94812ddf44402c6" category="admonition">將clientID指定為_989efff4-9a9e-46fa-9f17-de39e15714f9_。這是Cloud Manager精靈中所命名的Cloud Manager Azure應用程式ID。</block>
+  <block id="598f1da796ed62d80dddd63cb8775774" category="list-text">請租戶管理員在瀏覽器中執行URL、並取得他的同意。</block>
+  <block id="3cc2e72844bf5927e62f9110eb43bd87" category="paragraph">您的管理員可以忽略顯示的錯誤</block>
+  <block id="e7cf5a691d8b98575b52980ab32d1529" category="inline-link">從Cloud Manager建立Connector</block>
+  <block id="4953d211fdc631ccd4bd4b6c3e2b6405" category="list-text"><block ref="c4801d44d2cb812bcecd516c50ca775f" category="inline-link-rx"></block>。</block>
+  <block id="1f1b6b890eecc430a090f1c146a38865" category="admonition">建立連接器時所提供的使用者名稱和密碼、或金鑰、都是連線至機器所需的</block>
+  <block id="34121089909a31947c54129b515d4b5f" category="summary">您可以監控已執行工作的狀態、接收電子郵件通知、以及檢視儀表板。</block>
+  <block id="41b4e5d916e26c9e0d32ceff6fd589ed" category="doc">管理營運</block>
+  <block id="4639d0e2e2909a747265c2f704128bca" category="section-title">監控工作</block>
+  <block id="f593149ce73a2c77bd9c3ad43f6f72b2" category="paragraph">按SnapCenter 一下「支援服務」頁面上的*工作監控*、即可檢視工作狀態。「工作監控」頁面會顯示整體摘要、並列出所有工作。</block>
+  <block id="7088b8034cb794350a5fc5ef129274bb" category="paragraph">然後按一下 <block ref="7c7910c2beb8437dc7aa4b8b65a637e8" category="inline-image-macro-rx" type="image"></block> 以檢視詳細資料。</block>
+  <block id="ecec91844d8e95643f8ddacd181ec4c0" category="inline-image-macro">工作監控頁面的快照</block>
+  <block id="848be2be6f65cefa3d81956ea8872d39" category="paragraph"><block ref="848be2be6f65cefa3d81956ea8872d39" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="c974e2366aaf03c2ef4696101c8d7f62" category="section-title">電子郵件通知</block>
+  <block id="f9e6436ca6616e01b0447d5324d7cb64" category="paragraph">根據預設、系統會針對隨需備份、排程備份和還原作業失敗、傳送電子郵件通知。只有具備「帳戶管理員」角色的Cloud Manager使用者才會收到電子郵件。</block>
+  <block id="fea84990764109b117844dae6e7232a7" category="section-title">檢視儀表板</block>
+  <block id="f3f9b42bf5249ca96d1002dd6a400489" category="paragraph">按SnapCenter 一下「支援服務」頁面上的「*總覽*」、即可檢視保護摘要、組態詳細資料及工作狀態。</block>
+  <block id="d93b727eea86e7cfe22810ad4d54d6fe" category="inline-image-macro">儀表板的快照</block>
+  <block id="1c1aa7efcf441f4b4084baa7c289a9da" category="paragraph"><block ref="1c1aa7efcf441f4b4084baa7c289a9da" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="3c10116b37b407ac79092a38ffb292e4" category="summary">在您透過NetApp技術支援開啟支援案例之前、您必須先將NetApp支援網站帳戶新增至Cloud Manager、然後註冊以取得支援。</block>
+  <block id="42748df9eaa0be17ddc5cc1593cf57ab" category="doc">註冊以取得支援</block>
+  <block id="aeaeee19a7c393222e407a525cf01991" category="section-title">新增一個NSS帳戶</block>
+  <block id="de2241fea60d98698faaa196ff73ee80" category="paragraph">「支援儀表板」可讓您從單一位置新增及管理所有NetApp支援網站帳戶。</block>
+  <block id="5be2593b5948f30a15179a32daa73ee2" category="inline-link">註冊一項</block>
+  <block id="14b05cf61f1aba58d38b393e69b69538" category="list-text">如果您還沒有 NetApp 支援網站帳戶、<block ref="0a8e82436ea73fe635862cfba3acf101" category="inline-link-rx"></block>。</block>
+  <block id="0046efb3377274ff3215d4b30269809e" category="list-text">在Cloud Manager主控台右上角、按一下「說明」圖示、然後選取*「支援」*。</block>
+  <block id="b50f0a46135bcb7083b1f2f82032fc26" category="inline-image-macro">「說明」功能表的快照、其中「支援」是第一個列出的選項</block>
+  <block id="868d9aa88f16ea923af1d15eac5d2647" category="paragraph"><block ref="868d9aa88f16ea923af1d15eac5d2647" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="d17d6b5dafebab6b7659da8850737e70" category="list-text">按一下「*」「nss管理」&gt;「新增nssAccount」*。</block>
+  <block id="8aaf101e623c543c7eef3c65f6233366" category="list-text">出現提示時、按一下*繼續*以重新導向至Microsoft登入頁面。</block>
+  <block id="19d089db572ee6a1e154a0c9c9e57bfd" category="paragraph">NetApp使用Microsoft Azure Active Directory做為身分識別供應商、提供專為支援與授權所設計的驗證服務。</block>
+  <block id="465ec6d5eafa3524c948c99d8bfcd306" category="list-text">在登入頁面上、提供您的NetApp支援網站註冊電子郵件地址和密碼、以執行驗證程序。</block>
+  <block id="f5fb4199485234c409525f430b737010" category="paragraph">此動作可讓Cloud Manager使用您的NSS帳戶。</block>
+  <block id="b4c6a2f33e7b2a38495546b8d5cd8e84" category="paragraph">附註：帳戶必須是客戶層級的帳戶（非來賓帳戶或臨時帳戶）。</block>
+  <block id="fc65ebd4739f2f8ca46062a8280faea9" category="section-title">註冊您的帳戶以取得支援</block>
+  <block id="3e080914efe0d0ca025439fbb68d437f" category="paragraph">支援註冊可從支援儀表板的Cloud Manager取得。</block>
+  <block id="fb07bf6b7698dbe934b8b2164d915484" category="list-text">在* Resources（資源）*選項卡中，單擊* Register for Support*（註冊以獲得支持*）。</block>
+  <block id="392fb0270d0d84dbc3fdf8c67da1e5ad" category="list-text">選取您要登錄的NSS認證、然後按一下「*登錄*」。</block>
+  <block id="9192a9f7a760ae1ad87bc3d0801be2ad" category="summary">使用系統定義或自訂原則、建立SAP HANA系統的隨需備份或排程備份。</block>
+  <block id="00c3a521f200f15289d4d2520914f61d" category="doc">備份SAP HANA系統</block>
+  <block id="35bd15d82db654f30aca713785904042" category="paragraph">您可以使用系統定義或自訂原則、執行隨需備份或排程SAP HANA系統備份。支援Snapshot型和檔案型備份。SnapCenter</block>
+  <block id="0a4a3719bc7519d1162060e0f0e08f8a" category="section-title">建立備份原則</block>
+  <block id="a251d47b9cd9ab372db3e3ed425d337e" category="paragraph">原則指定備份類型、備份頻率、排程、保留類型、保留計數、 以及資料保護作業的其他特性。您可以使用Cloud Manager UI來建立原則。</block>
+  <block id="411ff40e8864e71d617fc988b4f37448" category="paragraph">根據預設、有兩個系統定義的原則可供使用、每個原則分別用於快照型和檔案型備份作業。</block>
+  <block id="497cdcc4d96044dee873a809034126b5" category="list-text">在「支援服務」頁面上、按一下SnapCenter 「*原則*」&gt;「*新增*」。</block>
+  <block id="9b53d8722376d76d95e16c11121c7aff" category="list-text">在「Create Backup Policy（建立備份原則）」頁面上、執行下列動作：</block>
+  <block id="d14a88e73f059d5716e327a50ec863a3" category="list-text">指定原則名稱。</block>
+  <block id="086639263c82bd871885aeb5fa33fee8" category="list-text">選取您要使用此原則建立的備份類型。</block>
+  <block id="ba0006fc6cf3c24524212d8a22e96bee" category="list-text">指定備份名稱。</block>
+  <block id="8e11894e22f83c26c34d6e7a59f562fa" category="paragraph">預設會新增後置時間戳記。您可以選取備份名稱中應包含的其他尾碼、並定義尾碼的顯示順序。</block>
+  <block id="0fbdb70e1ea8c88151e4fb2c7b226348" category="list-text">指定排程備份的排程頻率、以及排程備份的開始和結束時間。</block>
+  <block id="dbf5a2ea304133a2405e80bab3a107cd" category="list-text">指定要保留的快照複本數目、或指定保留快照複本的天數。</block>
+  <block id="ce4aed91ed2a3f8e3ed8369bb76e9402" category="paragraph">按一下即可檢視、編輯或刪除原則 <block ref="7c7910c2beb8437dc7aa4b8b65a637e8" category="inline-image-macro-rx" type="image"></block> 與原則對應。</block>
+  <block id="c91ff5b89781f9b20673d63d2fbc4481" category="section-title">建立隨需備份</block>
+  <block id="07ef1c94a48a13e2c73cf7bac8561700" category="paragraph">建立原則關聯或不關聯任何原則、即可建立SAP HANA系統的隨需備份。</block>
+  <block id="705a9b11652f383ee34aefa3d0e2c869" category="list-text">按一下 <block ref="7c7910c2beb8437dc7aa4b8b65a637e8" category="inline-image-macro-rx" type="image"></block> 與您要保護的系統相對應。</block>
+  <block id="8e546c540a2eb559f025d823f0985817" category="list-text">按一下*隨需備份*。</block>
+  <block id="a69d48245ab1162d9f0f89d1d951689a" category="list-text">在「隨需備份」頁面上、執行下列其中一項動作：</block>
+  <block id="d35259313a54c1b94e605937a2cdf44e" category="list-text">如果要將備份與原則關聯、請選取原則、然後按一下「*建立備份*」。</block>
+  <block id="91f2a03316205139c26fce3578713c69" category="list-text">如果您不想將備份與原則建立關聯、請執行下列動作：</block>
+  <block id="39474ced92a30e1703441d25894a3685" category="list-text">在Policy（策略）字段中，選擇* None"（無）*。</block>
+  <block id="d9c103e9b28e2bebca1491609f830d9e" category="list-text">選取備份類型。</block>
+  <block id="9c390b5a1fe85e859a200219d560a583" category="paragraph">如果您要備份非資料磁碟區、則只能選取* Snapshot Based *作為備份類型。</block>
+  <block id="32342343e5df757f90e1e11a59ac04e9" category="list-text">指定保留期間。</block>
+  <block id="3c384d2eeea22869be9b66e36dec9d6e" category="list-text">按一下「*建立備份*」。</block>
+  <block id="73626abd0ef8681eaa400cbeb51eeb4e" category="section-title">建立排程備份</block>
+  <block id="1c4e52af72de4105d44b1b12fdccbf73" category="paragraph">將原則與SAP HANA系統建立關聯、以建立排程備份。</block>
+  <block id="fcb5607e0e0f82fe2ae26e3330c77dd0" category="list-text">按一下*保護*。</block>
+  <block id="d6381ef9d201b881b6c16b897755b3b0" category="list-text">選取您要用來保護SAP HANA系統的原則。</block>
+  <block id="7ff191df90fac0fa94ab5c2b5101a5e9" category="sidebar">所有Cloud Manager文件</block>
+  <block id="a7aed6b9de0d7fa9719e4d634c1d806f" category="sidebar">支援服務文件SnapCenter</block>
+  <block id="7d0ee6fed10d3d4e5c9ee496729ab519" category="sidebar">版本資訊</block>
+  <block id="411eaaaa405899304e54dce3363a2baf" category="sidebar">快速入門</block>
+  <block id="fc6193376b55c5eef2823c76b83a1607" category="sidebar">使用支援服務來保護SAP HANA系統SnapCenter</block>
+  <block id="0adc03eac86772ad2c75c8f140be417e" category="sidebar">知識與支援</block>
+  <block id="e096a5e1d4ec29b8011f6c6d15b90ee2" category="sidebar">最新資訊</block>
+  <block id="2ea7b0fee984c9c7fcabd32058eb86ac" category="sidebar">啟用SnapCenter 支援服務</block>
+  <block id="ee68e5b99222bbc29a480fcb0d1d6ee2" category="sidebar">先決條件</block>
+  <block id="94ee7072c2750da1997438a715efb7d4" category="sidebar">建立連接器</block>
+  <block id="676f733b0741167535adf605d514137c" category="sidebar">保護SAP HANA系統</block>
+  <block id="e0e7dee929fec9739011d2377147cb1b" category="sidebar">知識支援</block>
+  <block id="813011e2103649bb71f124adedcc10ea" category="sidebar">部落格社群</block>
+  <block id="dd490b81914dd945601e442a41cb4222" category="sidebar">NetApp社群</block>
+  <block id="ff6c37cbc252e306a6b4e390ec13cbc1" category="sidebar">Cloud Central部落格</block>
+  <block id="ad203e818e0c9d7f42f1c260b33875f3" category="sidebar">雲端網路研討會</block>
+</blocks>

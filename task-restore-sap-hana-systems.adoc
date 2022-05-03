@@ -1,0 +1,37 @@
+---
+sidebar: sidebar 
+permalink: task-restore-sap-hana-systems.html 
+keywords: restore, snapcenter service, SAP HANA, backups, HANA studio, recovery, point-in-time 
+summary: 從該系統的備份之一還原SAP HANA系統。 
+---
+= 還原SAP HANA系統
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+萬一資料遺失、請從該系統的備份之一還原SAP HANA系統。
+
+僅支援儲存還原。因為不支援還原HANA系統、所以您應該先使用SAP HANA Studio或SAP HANA Cockpit將HANA系統置於還原模式。
+
+*步驟*
+
+. 在「支援服務」頁面上、按一下SnapCenter 「* SAP HANA Systems*」。
++
+畫面會顯示加入SnapCenter 到「畫面服務」的系統。
+
+. 按一下 image:screenshot-anf-view-system.png["可檢視詳細資料的圖示快照"] 與您要還原的系統相對應。
+. 按一下「*檢視備份*」。
+. 在備份區段中、按一下 image:screenshot-anf-view-system.png["可檢視詳細資料的圖示快照"] 與您要用來還原系統的備份相對應。
+. 按一下 * 還原 * 。
+. 檢閱訊息並選擇*是、還原*進行確認。
+
+
+
+IMPORTANT: 還原資料庫之後、如果您使用HANA Studio對SAP HANA系統進行時間點還原、SnapCenter 則可能會還原根據保留設定由還原服務刪除的資料備份目錄項目。如果刪除的資料備份目錄項目因為恢復作業而還原、SnapCenter 則無法偵測並刪除這些項目。這可能導致SnapCenter 無法正確清理記錄目錄。您可以驗證SnapCenter 支援服務中的備份項目、找出哪些資料備份目錄項目是新還原的項目、然後手動刪除這些項目。
+
+*瞭解更多資訊*https://docs.netapp.com/us-en/netapp-solutions-sap/backup/saphana-backup-anf-overview.html["SAP HANA利用Azure NetApp Files NetApp服務在支援功能的基礎上進行備份與還原SnapCenter"^]

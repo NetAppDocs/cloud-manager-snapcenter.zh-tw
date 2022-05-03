@@ -1,0 +1,16 @@
+---
+layout: astra 
+sidebar: sidebar 
+permalink: index.html 
+lead: SnapCenter Service enabled within Cloud Manager offers efficient, application consistent, policy-based backup and restore of SAP HANA Systems residing on Azure NetApp Files. 
+summary: Cloud Manager內建的支援功能可為駐留在原地的SAP HANA系統提供高效率、應用程式一致且原則型的備份與還原功能。SnapCenter Azure NetApp Files 
+---
+= 支援服務文件SnapCenter
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
