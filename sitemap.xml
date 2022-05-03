@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  
+    
+    
+  
+
+  
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/concept-overview-architecture-limitation-functionalities-snapcenter-service.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/legal-notices.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/reference-get-started-snapcenter-service.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/reference-manage-dashboard-monitor-notification-snapcenter-service.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/reference-prerequisites-azure-connector-snapcenter-service.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/reference-troubleshoot-solution-issue.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter//search.html</loc>
+      
+      <lastmod>2022-05-03T06:02:03+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/task-add-sap-hana-systems-non-data-volumes-snapcenter-service.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/task-create-azure-connector-user-consent-snapcenter-service.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/task-create-backup-ondemand-policies-schedule-sap-hana.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/task-enable-snapcenter-service-azure-netapp-files.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/task-get-help.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/task-install-hdbsql-client-snapcenter-service.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/task-restore-sap-hana-systems.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/task-support-registration.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/zh-tw/cloud-manager-snapcenter/whats-new.html</loc>
+      
+      <lastmod>2022-05-03T06:01:41+00:00</lastmod>
+      
+    </url>
+  
+
+  
+  
+</urlset>
